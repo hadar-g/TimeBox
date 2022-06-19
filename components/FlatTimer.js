@@ -15,7 +15,17 @@ useEffect(() => {
         if(isRunning){
             setSecs(secs => secs - 1)
             clearInterval(interval)
+
+            if(secs % 60 == 0){
+                setSecs(59)
+                setMins(mins => mins - 1)
+                if(mins %60 == 0){
+                    setHours(hours => hours - 1)
+                    setMins(59)
+                }
+            }
         }
+        clearInterval(interval)
     }, 1000)
 }, [secs, isRunning])
 
