@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, Button, TextInput, Keyboard} from 'react-native
 import { useState, useEffect, React, Component} from 'react';
 
 const TimerInput = (props) => {
-    const[secondsInput, setSecondsInput] = useState(0)
-    const[minsInput, setMinsInput] = useState(0);
-    const[hoursInput, setHoursInput] = useState(0);
+    const[secondsInput, setSecondsInput] = useState('00')
+    const[minsInput, setMinsInput] = useState('00');
+    const[hoursInput, setHoursInput] = useState('00');
     const[timerNameInput, setTimerNameInput] = useState('')
 
     const onTimerSubmit = () => {

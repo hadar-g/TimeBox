@@ -23,8 +23,15 @@ export default function App() {
 
       <TimerInput onAddTimer = {addTimer} />
 
-      { timersArray.map( (obj) => {
-        <Text>one </Text>
+      { timersArray.map( (timerObject) => {
+         return(
+          <FlatTimer 
+            key = {timerObject.index}
+            s = {timerObject.seconds} 
+            m = {timerObject.minutes} 
+            h ={timerObject.hours} 
+            title = {timerObject.title} />
+         )
       })}
 
     </View>
