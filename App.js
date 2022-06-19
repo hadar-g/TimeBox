@@ -6,15 +6,26 @@ import TimerInput from './components/TimerInput';
 
 
 export default function App() {
-  
+
+  const[timersArray, setTimersArray] = useState([])
+  //const timersArray = [];
+  const[index, setIndex] = useState(0)
+
+  const addTimer = (timerObject) => {
+   setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
+   //timersArray.push({...timerObject, index: index})
+    setIndex(index => index + 1)
+    console.log(timersArray)
+  }
+
   return (
     <View style={styles.container}>
 
-      <TimerInput />
+      <TimerInput onAddTimer = {addTimer} />
 
-      <FlatTimer s={15} m={2} h = {1} title = 'title number 1'/>
-
-      <FlatTimer s = {20} m = {30} h ={1} title ="title number 2" />
+      { timersArray.map( (obj) => {
+        <Text>one </Text>
+      })}
 
     </View>
   );

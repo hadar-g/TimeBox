@@ -9,11 +9,20 @@ const TimerInput = (props) => {
     const[timerNameInput, setTimerNameInput] = useState('')
 
     const onTimerSubmit = () => {
-        console.log(timerNameInput);
-        console.log(typeof(secondsInput))
-        console.log(minsInput);
-        console.log(hoursInput)
+
         Keyboard.dismiss()
+
+        props.onAddTimer({
+            title: timerNameInput,
+            seconds: secondsInput, 
+            minutes: minsInput, 
+            hours: hoursInput})
+
+        setSecondsInput(null);
+        setMinsInput(null);
+        setHoursInput(null);
+        setTimerNameInput('');
+       
     }
 
     return(
