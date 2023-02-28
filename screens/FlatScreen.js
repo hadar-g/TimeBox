@@ -9,12 +9,10 @@ import { NavigationContainer } from '@react-navigation/native';
 export default function FlatScreen({navigation}) {
 
   const[timersArray, setTimersArray] = useState([])
-  //const timersArray = [];
   const[index, setIndex] = useState(0)
 
   const addTimer = (timerObject) => {
    setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
-   //timersArray.push({...timerObject, index: index})
     setIndex(index => index + 1)
     console.log(timersArray)
   }

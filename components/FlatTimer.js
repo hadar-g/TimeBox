@@ -56,6 +56,7 @@ useEffect(() => {
                 <Button title ='start' onPress={() => setIsRunning(true)}/>
                 <Button title = 'stop' onPress={() => setIsRunning(false)}/>
             </View>
+            <Button title = "Remove" /* TODO add code to remove timer */ />
         </View>
     )
 }
