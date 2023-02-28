@@ -9,10 +9,11 @@ const [mins, setMins] = useState(props.m);
 const[hours, setHours] = useState(props.h);
 const[totalSeconds, setTotalSeconds] = useState(0)
 const [isRunning, setIsRunning] = useState(false)
+const[timerDone, setTimerDone] = useState(false)
 
-useEffect(()=> {
-    setTotalSeconds( ( Math.floor((parseInt(hours)*3600) + (parseInt(mins)*60) + parseInt(secs) )))
-}, [])
+// useEffect(()=> {
+//     setTotalSeconds( ( Math.floor((parseInt(hours)*3600) + (parseInt(mins)*60) + parseInt(secs) )))
+// }, [])
 
 useEffect(() => {
 
@@ -21,29 +22,30 @@ useEffect(() => {
     setHours(hours => hours.toString().padStart(2, '0'))
     
     const interval = setInterval(() => {
-
         if(isRunning){
 
-            
-            setTotalSeconds(totalSeconds => totalSeconds - 1);
-            console.log(totalSeconds)
-            console.log(hours)
-            console.log(mins)
-            console.log(secs)
-
-            setHours( Math.floor(totalSeconds / 3600) );
-            setMins( Math.floor( (totalSeconds % 3600) / 60) );
-            setSecs( Math.floor( (totalSeconds % 3600) % 60) );
-
-            setSecs(secs => secs.toString().padStart(2, '0'))
-            setMins(mins => mins.toString().padStart(2, '0'))
-            setHours(hours => hours.toString().padStart(2, '0'))
+            if(secs != '00'){
+                setSecs(secs => (secs - 1).toString().padStart(2, '0'))
+            }
+            if(secs == '00' && mins != '00'){
+                setSecs('59')
+                setMins(mins => (mins - 1).toString().padStart(2, '0'))
+            }
+            if(secs == '00' && mins == '00' && hours == '00'){
+                setTimerDone(true)
+                console.log("timer is over")
+            }
+            if(secs == '00' && mins == '00' && hours != '00'){
+                setSecs('59')
+                setMins('59')
+                setHours(hours => (hours - 1).toString().padStart(2, '0'))
+            }
 
         }
 
         clearInterval(interval)
     }, 1000)
-}, [totalSeconds, isRunning])
+}, [totalSeconds, isRunning, secs])
 
     return(
         <View style = {styles.container}>
