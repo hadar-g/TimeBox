@@ -18,11 +18,11 @@ export default function FlatScreen({navigation}) {
   }
 
   return (
-<ScrollView>
-<View style={styles.container}>
-    <TimerInput />
-      <TimerInput onAddTimer = {addTimer} />
 
+<View style={styles.container}>
+      <Text style={styles.welcome}>Welcome to the Timers Page</Text>
+      <TimerInput onAddTimer = {addTimer} />
+      <ScrollView>
       { timersArray.map( (timerObject) => {
          return(
           <FlatTimer 
@@ -33,9 +33,9 @@ export default function FlatScreen({navigation}) {
             title = {timerObject.title} />
          )
       })}
-
-    </View>
 </ScrollView>
+    </View>
+
 
    
   );
@@ -46,8 +46,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'top',
-   // backgroundColor: 'red',
-    paddingTop: 150
+    paddingTop: 15,
+    alignItems: 'center'
 
   },
+  welcome: {
+    fontSize: 25,
+  }
 });
