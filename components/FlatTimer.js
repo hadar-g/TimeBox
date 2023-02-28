@@ -31,14 +31,15 @@ useEffect(() => {
                 setSecs('59')
                 setMins(mins => (mins - 1).toString().padStart(2, '0'))
             }
-            if(secs == '00' && mins == '00' && hours == '00'){
-                setTimerDone(true)
-                console.log("timer is over")
-            }
             if(secs == '00' && mins == '00' && hours != '00'){
                 setSecs('59')
                 setMins('59')
                 setHours(hours => (hours - 1).toString().padStart(2, '0'))
+            }
+            if(secs == '00' && mins == '00' && hours == '00'){
+                setTimerDone(true)
+                setIsRunning(false)
+                console.log("timer is over")
             }
 
         }
@@ -48,7 +49,7 @@ useEffect(() => {
 }, [totalSeconds, isRunning, secs])
 
     return(
-        <View style = {styles.container}>
+        <View style = {!timerDone ?styles.container : {...styles.container, backgroundColor: 'red'} }>
             <Text style = {styles.title}>{props.title}</Text>
             <Text style = {styles.clock}> {hours} : {mins} : {secs} </Text>
             <View style = {styles.buttons}>
@@ -74,11 +75,11 @@ const styles = StyleSheet.create({
         width: '95%',
         alignItems: 'center',
         borderColor: 'gray',
-        borderWidth: 0.5,
-        borderRadius: 5,
+        borderWidth: 5,
+        borderRadius: 25,
         padding: 2,
         margin: 10,
-        marginRight: 5
+        marginRight: 5,
     },
     buttons: {
         flexDirection: 'row'
