@@ -23,6 +23,9 @@ useEffect(() => {
     // setSecs(secs => ('0' + secs).slice(-2))
     // setMins(mins => ('0' + mins).slice(-2))
     // setHours(hours => ('0' + hours).slice(-2))
+    // if(secs === null)setSecs(secs => '00'.toString().padStart(2, '0'))
+    // if(mins === null)setMins(mins => '00'.toString().padStart(2, '0'))
+    // if(hours === null)setHours(hours => '00'.toString().padStart(2, '0'))
 
     setSecs(secs => secs.toString().padStart(2, '0'))
     setMins(mins => mins.toString().padStart(2, '0'))

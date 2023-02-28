@@ -22,6 +22,7 @@ export default function FlatScreen({navigation}) {
   return (
 
 <View style={styles.container}>
+    <TimerInput />
       <TimerInput onAddTimer = {addTimer} />
 
       { timersArray.map( (timerObject) => {
