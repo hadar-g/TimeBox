@@ -43,13 +43,10 @@ const TimerInput = (props) => {
     return(
     <View>
             <Button title ="Add Timer" onPress={() => openPicker()}/>
-        <View>
-            
-        </View>
         <Modal
             visible={modalVisible}
             animationType="slide">
-<View style = {styles.modal}>
+        <View style = {styles.modal}>
                <TextInput 
                style = {styles.textInputContainerTwo}
                 //style = {styles.textInputContainer}
@@ -109,7 +106,7 @@ const TimerInput = (props) => {
         
         </View>
            <Button title = "set timer" onPress={()=>onTimerSubmit()}/>
-           </View>
+        </View>
         </Modal>
         
        
