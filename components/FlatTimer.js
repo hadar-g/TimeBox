@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView} from 'react-native';
 import { useState, useEffect, React, Component} from 'react';
 
 const FlatTimer = (props) => {
@@ -51,37 +51,39 @@ useEffect(() => {
         <View style = {styles.container}>
             <Text style = {styles.title}>{props.title}</Text>
             <Text style = {styles.clock}> {hours} : {mins} : {secs} </Text>
-            <Button title ='start' onPress={() => setIsRunning(true)}/>
-            <Button title = 'stop' onPress={() => setIsRunning(false)}/>
+            <View style = {styles.buttons}>
+                <Button title ='start' onPress={() => setIsRunning(true)}/>
+                <Button title = 'stop' onPress={() => setIsRunning(false)}/>
+            </View>
         </View>
     )
 }
 const styles = StyleSheet.create({
     title: {
-       // backgroundColor: 'red',
-        flex: 1,
-        fontSize: 18,
-
+        fontSize: 35,
+        fontFamily: 'Georgia'
     },
     clock: {
-       // backgroundColor: 'green',
-        flex: 1,
-        fontSize: 18
+      paddingTop: 10,
+        fontSize: 45,
+        fontFamily: 'Helvetica'
+        
     },
     container: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         width: '95%',
-        //justifyContent: 'center',
-        justifyContent: 'left',
         alignItems: 'center',
         borderColor: 'gray',
         borderWidth: 0.5,
         borderRadius: 5,
-       // backgroundColor: 'green',
         padding: 2,
         margin: 10,
         marginRight: 5
     },
+    buttons: {
+        flexDirection: 'row'
+        
+    }
 });
 
 export default FlatTimer

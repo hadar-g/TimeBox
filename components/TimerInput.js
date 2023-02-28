@@ -106,14 +106,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: 'gray',
-        //backgroundColor: 'red'
     },
     picker : {
-        //flex: 1,
-        width:'20%',
-        //backgroundColor: 'red',
-      
-        
+        width:'20%', 
     },
     scroll : {
         padding: 0,
@@ -122,7 +117,6 @@ const styles = StyleSheet.create({
           alignItems: 'center'
     },
     modal: {
-      //  backgroundColor: 'red',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',

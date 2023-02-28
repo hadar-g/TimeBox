@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, Button} from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView} from 'react-native';
 import { useState } from 'react';
 import FlatTimer from '../components/FlatTimer';
 import TimerInput from '../components/TimerInput';
@@ -20,7 +20,7 @@ export default function FlatScreen({navigation}) {
   }
 
   return (
-
+<ScrollView>
 <View style={styles.container}>
     <TimerInput />
       <TimerInput onAddTimer = {addTimer} />
@@ -37,6 +37,8 @@ export default function FlatScreen({navigation}) {
       })}
 
     </View>
+</ScrollView>
+
    
   );
 }
