@@ -32,11 +32,12 @@ const TimerInput = (props) => {
 
 
     return(
-    <View>
+    <View style = {styles.inputScreen}>
             <Button title ="Add Timer" onPress={() => setModalVisible(true)}/>
         <Modal
             visible={modalVisible}
-            animationType="slide">
+            animationType="slide"
+            transparent = {true}>
         <View style = {styles.modal}>
                <TextInput 
                style = {styles.textInputContainerTwo}
@@ -117,10 +118,17 @@ const styles = StyleSheet.create({
           alignItems: 'center'
     },
     modal: {
+        borderWidth: 2,
+        borderRadius: 20,
+        margin: '3%',
+        marginTop: '30%',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 0
+        padding: 0,
+        backgroundColor: 'white'
+    },
+    inputScreen: {
     }
 });
 
