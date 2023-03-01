@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, Pressable} from 'react-native';
 import { useState, useEffect, React, Component} from 'react';
 
 const FlatTimer = (props) => {
@@ -53,10 +53,17 @@ useEffect(() => {
             <Text style = {styles.title}>{props.title}</Text>
             <Text style = {styles.clock}> {hours} : {mins} : {secs} </Text>
             <View style = {styles.buttons}>
-                <Button title ='start' onPress={() => setIsRunning(true)}/>
-                <Button title = 'stop' onPress={() => setIsRunning(false)}/>
             </View>
-            <Button title = "Remove" /* TODO add code to remove timer */ />
+            <View style = {styles.buttons}>
+            <Pressable style = {styles.removeButton}>
+                <Text style = {styles.buttonText}>Remove</Text>
+            </Pressable>
+            <Pressable 
+                style = {isRunning ? {...styles.startStop, backgroundColor: 'red'} : {...styles.startStop, backgroundColor: 'green'} }
+                onPress = {() => {setIsRunning(!isRunning)}}>
+                <Text style = {styles.buttonText}>{isRunning ? "Stop" : "Start"}</Text>
+            </Pressable>
+            </View>
         </View>
     )
 }
@@ -85,7 +92,37 @@ const styles = StyleSheet.create({
     buttons: {
         flexDirection: 'row'
         
+    },
+    startStop: {
+        backgroundColor: 'red',
+        height: 75,
+        width: 75,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.8,
+        marginLeft: '10%'
+    }, 
+    buttonText: {
+        fontSize: 20,
+        fontFamily: 'Georgia',
+    },
+    removeButton: {
+        backgroundColor: 'orange',
+        height: 75,
+        width: 75,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.7,
+        marginRight: '10%'
+    },
+    buttons: {
+        flexDirection: 'row',
+        padding: 5
+
     }
+    
 });
 
 export default FlatTimer
