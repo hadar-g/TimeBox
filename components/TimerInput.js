@@ -125,8 +125,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
     },
-    inputScreen: {
-    }
 });
 
 export default TimerInput
