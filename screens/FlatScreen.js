@@ -17,6 +17,10 @@ export default function FlatScreen({navigation}) {
     console.log(timersArray)
   }
 
+  const removeTimer = (index) => {
+    console.log('removing time from timer with index', index)
+  }
+
   return (
 
 <View style={styles.container}>
@@ -30,7 +34,8 @@ export default function FlatScreen({navigation}) {
             s = {timerObject.seconds} 
             m = {timerObject.minutes} 
             h ={timerObject.hours} 
-            title = {timerObject.title} />
+            title = {timerObject.title}
+            onRemoveTimer = {removeTimer}/>
          )
       })}
     </ScrollView>

@@ -11,6 +11,9 @@ const[totalSeconds, setTotalSeconds] = useState(0)
 const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
 
+const originalSeconds = props.s
+const orignalMinutes = props.m
+const originalHours = props.h
 // useEffect(()=> {
 //     setTotalSeconds( ( Math.floor((parseInt(hours)*3600) + (parseInt(mins)*60) + parseInt(secs) )))
 // }, [])
@@ -55,8 +58,21 @@ useEffect(() => {
             <View style = {styles.buttons}>
             </View>
             <View style = {styles.buttons}>
-            <Pressable style = {styles.removeButton}>
+            <Pressable 
+                style = {styles.removeButton}
+                onPress = {props.onRemoveTimer}>
                 <Text style = {styles.buttonText}>Remove</Text>
+            </Pressable>
+            <Pressable 
+                style = {styles.resetButton}
+                onPress = {() => {
+                    setTimerDone(false)
+                    setIsRunning(false)
+                    setSecs(originalSeconds)
+                    setMins(orignalMinutes)
+                    setHours(originalHours)
+                }}>
+                <Text style = {styles.buttonText}>Reset</Text>
             </Pressable>
             <Pressable 
                 style = {isRunning ? {...styles.startStop, backgroundColor: 'red'} : {...styles.startStop, backgroundColor: 'green'} }
@@ -100,12 +116,13 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.8,
-        marginLeft: '10%'
+        opacity: 0.6,
+        marginLeft: '5%'
     }, 
     buttonText: {
         fontSize: 20,
         fontFamily: 'Georgia',
+        color: 'white'
     },
     removeButton: {
         backgroundColor: 'orange',
@@ -114,8 +131,19 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.7,
-        marginRight: '10%'
+        opacity: 0.6,
+        marginRight: '5%'
+    },
+    resetButton: {
+        backgroundColor: 'blue',
+        height: 75,
+        width: 75,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.6,
+        marginRight: '5%',
+        marginLeft: '5%'
     },
     buttons: {
         flexDirection: 'row',
