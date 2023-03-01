@@ -40,7 +40,7 @@ const TimerInput = (props) => {
             transparent = {true}>
         <View style = {styles.modal}>
                <TextInput 
-               style = {styles.textInputContainerTwo}
+               style = {styles.timerNameInputContainer}
                 placeholder = "Timer Name"
                 value ={timerNameInput}
                 onChangeText={setTimerNameInput}
@@ -99,9 +99,9 @@ const TimerInput = (props) => {
     );
 }
 const styles = StyleSheet.create({
-    textInputContainerTwo:{
-        flexDirection: 'column',
-        width: '50%',
+    timerNameInputContainer:{
+        //flexDirection: 'column',
+        width: '60%',
         height: '10%',
         marginTop: 20,
         borderRadius: 5,
@@ -112,8 +112,6 @@ const styles = StyleSheet.create({
         width:'20%', 
     },
     scroll : {
-        padding: 0,
-        paddingTop: 0,
           flexDirection: 'row',
           alignItems: 'center'
     },
@@ -125,8 +123,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 0,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     inputScreen: {
     }
