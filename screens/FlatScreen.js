@@ -19,6 +19,7 @@ export default function FlatScreen({navigation}) {
 
   const removeTimer = (index) => {
     console.log('removing time from timer with index', index)
+    setTimersArray(timersArray => timersArray.filter((timer) => timer.index != index))
   }
 
   return (
@@ -35,7 +36,8 @@ export default function FlatScreen({navigation}) {
             m = {timerObject.minutes} 
             h ={timerObject.hours} 
             title = {timerObject.title}
-            onRemoveTimer = {removeTimer}/>
+            onRemoveTimer = {() => {removeTimer(timerObject.index)}}
+          />
          )
       })}
     </ScrollView>
