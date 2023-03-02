@@ -56,8 +56,6 @@ const TimerInput = (props) => {
             selectedValue={hoursInput}
             onValueChange={(itemValue) =>{
                 setHoursInput(itemValue)
-                console.log(secondsInput)
-
             }}
             >
                 <Picker.Item label = "0" value = "0"/>
@@ -66,6 +64,10 @@ const TimerInput = (props) => {
                 <Picker.Item label = "3" value = "3"/>
                 <Picker.Item label = "4" value = "4"/>
                 <Picker.Item label = "5" value = "5"/>
+                <Picker.Item label = "6" value = "6"/>
+                <Picker.Item label = "7" value = "7"/>
+                <Picker.Item label = "8" value = "8"/>
+                <Picker.Item label = "9" value = "9"/>
         </Picker>
             <Text>Hours</Text>
         <Picker 
@@ -79,6 +81,10 @@ const TimerInput = (props) => {
                 <Picker.Item label = "3" value = "3"/>
                 <Picker.Item label = "4" value = "4"/>
                 <Picker.Item label = "5" value = "5"/>
+                <Picker.Item label = "6" value = "6"/>
+                <Picker.Item label = "7" value = "7"/>
+                <Picker.Item label = "8" value = "8"/>
+                <Picker.Item label = "9" value = "9"/>
             </Picker>
             <Text> Mins</Text>
             <Picker 
@@ -92,6 +98,10 @@ const TimerInput = (props) => {
                 <Picker.Item label = "3" value = "3"/>
                 <Picker.Item label = "4" value = "4"/>
                 <Picker.Item label = "5" value = "5"/>
+                <Picker.Item label = "6" value = "6"/>
+                <Picker.Item label = "7" value = "7"/>
+                <Picker.Item label = "8" value = "8"/>
+                <Picker.Item label = "9" value = "9"/>
             </Picker>
             <Text>Sec</Text>
         </View>
