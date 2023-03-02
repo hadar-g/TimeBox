@@ -39,11 +39,11 @@ const TimerInput = (props) => {
             animationType="slide"
             transparent = {true}>
         <View style = {styles.modal}>
-               <TextInput 
-               style = {styles.timerNameInputContainer}
-                placeholder = "Timer Name"
-                value ={timerNameInput}
-                onChangeText={setTimerNameInput}
+        <TextInput 
+            style = {styles.timerNameInputContainer}
+            placeholder = "Timer Name"
+            value ={timerNameInput}
+            onChangeText={setTimerNameInput}
             />
         <View
         style = {styles.scroll}>
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     },
     picker : {
         width:'20%', 
+        marginTop: -35
     },
     scroll : {
           flexDirection: 'row',
