@@ -59,12 +59,13 @@ useEffect(() => {
             </View>
             <View style = {styles.buttons}>
             <Pressable 
-                style = {styles.removeButton}
+                 style = {({pressed}) => [pressed ? {...styles.removeButton, opacity: 0.4} : styles.removeButton]}
                 onPress = {props.onRemoveTimer}>
                 <Text style = {styles.buttonText}>Remove</Text>
             </Pressable>
             <Pressable 
-                style = {styles.resetButton}
+                style = {({pressed}) => [pressed ? {...styles.resetButton, opacity: 0.4} : styles.resetButton]}
+                // style = {styles.resetButton}
                 onPress = {() => {
                     setTimerDone(false)
                     setIsRunning(false)
@@ -75,7 +76,7 @@ useEffect(() => {
                 <Text style = {styles.buttonText}>Reset</Text>
             </Pressable>
             <Pressable 
-                style = {isRunning ? {...styles.startStop, backgroundColor: 'red'} : {...styles.startStop, backgroundColor: 'green'} }
+                style = {({pressed}) => [isRunning ? ((pressed) ? {...styles.startStop, backgroundColor: 'red', opacity: 0.4} : {...styles.startStop, backgroundColor: 'red'} ): ((pressed) ? {...styles.startStop, backgroundColor: 'green', opacity: 0.4} : {...styles.startStop, backgroundColor: 'green'})]}
                 onPress = {() => {setIsRunning(!isRunning)}}>
                 <Text style = {styles.buttonText}>{isRunning ? "Stop" : "Start"}</Text>
             </Pressable>
