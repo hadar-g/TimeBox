@@ -9,8 +9,10 @@ const TimerInput = (props) => {
     const[hoursInput, setHoursInput] = useState('0');
     const[timerNameInput, setTimerNameInput] = useState('')
     const[modalVisible, setModalVisible] = useState(false)
+    const[colorChosen, setColorChosen] = useState('red')
+    
 
-    const onTimerSubmit = () => {
+    const onTimerSubmit = () => {0
 
         setModalVisible(false)
         console.log("seconds input: ", secondsInput)
@@ -21,12 +23,14 @@ const TimerInput = (props) => {
             title: timerNameInput,
             seconds: secondsInput, 
             minutes: minsInput, 
-            hours: hoursInput})
+            hours: hoursInput,
+            timerColorChosen: colorChosen})
 
         setSecondsInput('0');
         setMinsInput('0');
         setHoursInput('0');
         setTimerNameInput('');
+        setColorChosen('red');
        
     }
 
@@ -92,11 +96,21 @@ const TimerInput = (props) => {
             <Text>Sec</Text>
         </View>
         <View style = {styles.colorPicker}>
-            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'red'}} />
-            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'green'}} />
-            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'blue'}} />
-            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'gray'}} />
-            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'black'}} />
+            <Pressable 
+                style = {(colorChosen == 'red') ? {...styles.colorPickBox, backgroundColor: 'red', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'red'} }
+                onPress={()=>{setColorChosen('red')}} />
+            <Pressable 
+                style = {(colorChosen == 'green') ? {...styles.colorPickBox, backgroundColor: 'green', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'green'}}
+                onPress={()=>{setColorChosen('green')}} />
+            <Pressable 
+                style = {(colorChosen == 'blue') ? {...styles.colorPickBox, backgroundColor: 'blue', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'blue'}}
+                onPress={()=>{setColorChosen('blue')}} />
+            <Pressable 
+                style = {(colorChosen == 'gray') ? {...styles.colorPickBox, backgroundColor: 'gray', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'gray'}} 
+                onPress={()=>{setColorChosen('gray')}}/>
+            <Pressable 
+                style = {(colorChosen == 'orange') ? {...styles.colorPickBox, backgroundColor: 'orange', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'orange'}} 
+                onPress={()=>{setColorChosen('orange')}}/>
 
             <Text style = {styles.timerColorText}>Timer Color</Text>
         </View>
@@ -143,7 +157,8 @@ const styles = StyleSheet.create({
     colorPickBox: {
         width: 20,
         height: 20,
-        margin: 5
+        margin: 5,
+        
     },
     timerColorText: {
         fontSize: 20,

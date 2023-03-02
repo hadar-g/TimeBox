@@ -15,6 +15,7 @@ export default function FlatScreen({navigation}) {
    setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
     setIndex(index => index + 1)
     console.log(timersArray)
+    const timerColorChosen = timerObject.timerColorChosen
   }
 
   const removeTimer = (index) => {
@@ -36,6 +37,7 @@ export default function FlatScreen({navigation}) {
             m = {timerObject.minutes} 
             h ={timerObject.hours} 
             title = {timerObject.title}
+            timerColorChosen = {timerObject.timerColorChosen}
             onRemoveTimer = {() => {removeTimer(timerObject.index)}}
           />
          )

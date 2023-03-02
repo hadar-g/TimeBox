@@ -52,7 +52,7 @@ useEffect(() => {
 }, [totalSeconds, isRunning, secs])
 
     return(
-        <View style = {!timerDone ?styles.container : {...styles.container, backgroundColor: 'red'} }>
+        <View style = {!timerDone ?{...styles.container, borderColor: props.timerColorChosen} : {...styles.container, backgroundColor: 'red'} }>
             <Text style = {styles.title}>{props.title}</Text>
             <Text style = {styles.clock}> {hours} : {mins} : {secs} </Text>
             <View style = {styles.buttons}>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '95%',
         alignItems: 'center',
-        borderColor: 'gray',
+       // borderColor: {timerBorderColor},
         borderWidth: 5,
         borderRadius: 25,
         padding: 2,
