@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable} from 'react-native';
 import { useState, useEffect, React, Component, useRef} from 'react';
 import {Picker} from '@react-native-picker/picker';
 
@@ -91,6 +91,15 @@ const TimerInput = (props) => {
             </Picker>
             <Text>Sec</Text>
         </View>
+        <View style = {styles.colorPicker}>
+            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'red'}} />
+            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'green'}} />
+            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'blue'}} />
+            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'gray'}} />
+            <Pressable style = {{...styles.colorPickBox, backgroundColor: 'black'}} />
+
+            <Text style = {styles.timerColorText}>Timer Color</Text>
+        </View>
            <Button title = "set timer" onPress={()=>onTimerSubmit()}/>
            <Button title = "Close" onPress ={() => setModalVisible(false)}/>
         </View>
@@ -126,6 +135,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
     },
+    colorPicker: {
+       // backgroundColor: 'red',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    colorPickBox: {
+        width: 20,
+        height: 20,
+        margin: 5
+    },
+    timerColorText: {
+        fontSize: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: 'Helvetica'
+    }
 });
 
 export default TimerInput
