@@ -260,12 +260,11 @@ const styles = StyleSheet.create({
     },
     picker : {
         width:'25%', 
-        marginTop: -35
     },
     scroll : {
           flexDirection: 'row',
           alignItems: 'center',
-          marginLeft: -25
+           marginLeft: -25,
     },
     modal: {
         borderWidth: 2,
