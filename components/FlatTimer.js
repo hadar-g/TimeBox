@@ -66,7 +66,7 @@ const resetTimer = () => {
 const onRenderLeftAction = () => {
     return(
       <Pressable 
-        style = {styles.leftSwipeStyle}
+        style = {({pressed}) => [pressed ? {...styles.leftSwipeStyle, opacity: 0.4} : styles.leftSwipeStyle]}
         onPress = {props.onRemoveTimer}>
         {/* <Text style = {{fontSize: 30, color: 'white'}}></Text> */}
         <Image 
@@ -78,7 +78,7 @@ const onRenderLeftAction = () => {
   const onRenderRightActions = () => {
     return (
       <Pressable 
-          style = {styles.rightSwipeStyle}
+      style = {({pressed}) => [pressed ? {...styles.rightSwipeStyle, opacity: 0.4} : styles.rightSwipeStyle]}
           onPress = {resetTimer}>
         {/* <Text style = {{fontSize: 30, color: 'white'}}>Reset</Text> */}
         <Image 
