@@ -257,9 +257,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: 'gray',
+        padding: 5,
     },
     picker : {
         width:'25%', 
+        margin: 3
     },
     scroll : {
           flexDirection: 'row',
@@ -294,8 +296,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica'
     },
     labels: {
-        fontSize: 20,
-        margin: -15
+        fontSize: 15,
+        margin: -10
     }
 });
 
