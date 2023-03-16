@@ -1,6 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable} from 'react-native';
-import { useState, useEffect, React, Component, useRef} from 'react';
+import { useState, React} from 'react';
 import {Picker} from '@react-native-picker/picker';
 
 const TimerInput = (props) => {

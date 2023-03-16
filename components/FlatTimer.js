@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, ScrollView, Pressable, Image} from 'react-native';
+import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image} from 'react-native';
 import { useState, useEffect, React, Component, forwardRef, useImperativeHandle, useRef} from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -9,18 +9,14 @@ const FlatTimer = (props) => {
 const [secs, setSecs] = useState(props.s);
 const [mins, setMins] = useState(props.m);
 const[hours, setHours] = useState(props.h);
-const[totalSeconds, setTotalSeconds] = useState(0)
 const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
-const[intervalId, setIntervalId] = useState(null)
-
 
 const originalSeconds = props.s
 const orignalMinutes = props.m
 const originalHours = props.h
-// useEffect(()=> {
-//     setTotalSeconds( ( Math.floor((parseInt(hours)*3600) + (parseInt(mins)*60) + parseInt(secs) )))
-// }, [])
+
+
 
 useEffect(() => {
     setSecs(secs => secs.toString().padStart(2, '0'))
@@ -70,7 +66,6 @@ const onRenderLeftAction = () => {
       <Pressable 
         style = {({pressed}) => [pressed ? {...styles.leftSwipeStyle, opacity: 0.4} : styles.leftSwipeStyle]}
         onPress = {props.onRemoveTimer}>
-        {/* <Text style = {{fontSize: 30, color: 'white'}}></Text> */}
         <Image 
         style = {{height: 40, width: 35}}
         source = {require('../Images/clipart1120803.png')}/>
@@ -82,7 +77,6 @@ const onRenderLeftAction = () => {
       <Pressable 
       style = {({pressed}) => [pressed ? {...styles.rightSwipeStyle, opacity: 0.4} : styles.rightSwipeStyle]}
           onPress = {resetTimer}>
-        {/* <Text style = {{fontSize: 30, color: 'white'}}>Reset</Text> */}
         <Image 
         style = {{height: 50, width: 50}}
         source = {require('../Images/clipart1258763.png')}/>
@@ -91,6 +85,7 @@ const onRenderLeftAction = () => {
   }
 
     return(
+    
         <GestureHandlerRootView>
         <Swipeable  
           renderLeftActions = {onRenderLeftAction}
@@ -101,28 +96,11 @@ const onRenderLeftAction = () => {
             <View style = {styles.buttons}>
             </View>
             <View style = {styles.buttons}>
-            {/* <Pressable 
-                 style = {({pressed}) => [pressed ? {...styles.removeButton, opacity: 0.4} : styles.removeButton]}
-                onPress = {props.onRemoveTimer}>
-                <Text style = {styles.buttonText}>Remove</Text>
-            </Pressable> */}
             <Pressable 
                 style = {({pressed}) => [isRunning ? ((pressed) ? {...styles.startStop, backgroundColor: 'red', opacity: 0.4} : {...styles.startStop, backgroundColor: 'red'} ): ((pressed) ? {...styles.startStop, backgroundColor: 'green', opacity: 0.4} : {...styles.startStop, backgroundColor: 'green'})]}
                 onPress = {() => {setIsRunning(!isRunning)}}>
                 <Text style = {styles.buttonText}>{isRunning ? "Stop" : "Start"}</Text>
             </Pressable>
-            {/* <Pressable 
-                style = {({pressed}) => [pressed ? {...styles.resetButton, opacity: 0.4} : styles.resetButton]}
-                // style = {styles.resetButton}
-                onPress = {() => {
-                    setTimerDone(false)
-                    setIsRunning(false)
-                    setSecs(originalSeconds)
-                    setMins(orignalMinutes)
-                    setHours(originalHours)
-                }}>
-                <Text style = {styles.buttonText}>Reset</Text>
-            </Pressable> */}
             </View>
         </View>
              </Swipeable> 

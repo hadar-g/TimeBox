@@ -1,12 +1,8 @@
 
-import { StyleSheet, Text, View, Button, ScrollView, Image, Pressable} from 'react-native';
+import {  StyleSheet, Text, View, ScrollView} from 'react-native';
 import FlatTimer from '../components/FlatTimer';
 import TimerInput from '../components/TimerInput';
-import RoundScreen from './RoundScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useState, React, forwardRef, useImperativeHandle, useRef} from 'react';
+import { useState, React} from 'react';
 
 
 export default function FlatScreen() {
@@ -23,8 +19,10 @@ export default function FlatScreen() {
 
   const removeTimer = (index) => {
     console.log('removing time from timer with index', index)
-    setTimersArray(timersArray => timersArray.filter((timer) => timer.index != index))
+    setTimersArray(timersArray => timersArray.filter((timer) => timer.index != index));
   }
+  
+
 
 
   return (
@@ -34,14 +32,11 @@ export default function FlatScreen() {
 
   <TimerInput onAddTimer = {addTimer} />
 
-
-
      <ScrollView style = {styles.scroll}>
       { timersArray.map( (timerObject) => {
          return(
 
-
-            <FlatTimer 
+          <FlatTimer 
             key = {timerObject.index}
             s = {timerObject.seconds} 
             m = {timerObject.minutes} 
@@ -50,6 +45,7 @@ export default function FlatScreen() {
             timerColorChosen = {timerObject.timerColorChosen}
             onRemoveTimer = {() => {removeTimer(timerObject.index)}}
           />
+    
 
          )
       })}
