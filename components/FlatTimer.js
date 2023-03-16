@@ -12,6 +12,7 @@ const[hours, setHours] = useState(props.h);
 const[totalSeconds, setTotalSeconds] = useState(0)
 const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
+const[intervalId, setIntervalId] = useState(null)
 
 
 const originalSeconds = props.s
@@ -22,37 +23,38 @@ const originalHours = props.h
 // }, [])
 
 useEffect(() => {
-
     setSecs(secs => secs.toString().padStart(2, '0'))
     setMins(mins => mins.toString().padStart(2, '0'))
     setHours(hours => hours.toString().padStart(2, '0'))
-    
-    const interval = setInterval(() => {
-        if(isRunning){
 
-            if(secs != '00'){
-                setSecs(secs => (secs - 1).toString().padStart(2, '0'))
+        const timer = setTimeout(() => {
+            if (isRunning) {
+                if (secs != '00') {
+                    setSecs(secs => (secs - 1).toString().padStart(2, '0'))
+                    console.log('increment seconds: ', secs)
+                }
+                if (secs == '00' && mins !== '00') {
+                    setSecs('59')
+                    setMins(mins => (mins - 1).toString().padStart(2, '0'))
+                    console.log("increment mins")
+                }
+                if (secs == '00' && mins <= '00' && hours != '00') {
+                    setSecs('59')
+                    setMins('59')
+                    setHours(hours => (hours - 1).toString().padStart(2, '0'))
+                    console.log("increment hours")
+                }
+                if (secs == '00' && mins == '00' && hours == '00') {
+                    setTimerDone(true)
+                    setIsRunning(false)
+                    console.log("timer is over")
+                }
             }
-            if(secs == '00' && mins != '00'){
-                setSecs('59')
-                setMins(mins => (mins - 1).toString().padStart(2, '0'))
-            }
-            if(secs == '00' && mins == '00' && hours != '00'){
-                setSecs('59')
-                setMins('59')
-                setHours(hours => (hours - 1).toString().padStart(2, '0'))
-            }
-            if(secs == '00' && mins == '00' && hours == '00'){
-                setTimerDone(true)
-                setIsRunning(false)
-                console.log("timer is over")
-            }
+        }, 1000)
+        return () => clearTimeout(timer)
 
-        }
+}, [isRunning, secs])
 
-        clearInterval(interval)
-    }, 1000)
-}, [totalSeconds, isRunning, secs]);
 
 const resetTimer = () => {
 
