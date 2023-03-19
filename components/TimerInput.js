@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable, Alert} from 'react-native';
 import { useState, React} from 'react';
 import {Picker} from '@react-native-picker/picker';
 
@@ -21,24 +21,32 @@ const TimerInput = (props) => {
     
 
     const onTimerSubmit = () => {0
+        
 
-        setModalVisible(false)
-        console.log("seconds input: ", secondsInput)
-        console.log("minutes inout: ", minsInput)
-        console.log("hours input:", hoursInput)
-        console.log("title input:", timerNameInput)
-        props.onAddTimer({
-            title: timerNameInput,
-            seconds: secondsInput, 
-            minutes: minsInput, 
-            hours: hoursInput,
-            timerColorChosen: colorChosen})
 
-        setSecondsInput('0');
-        setMinsInput('0');
-        setHoursInput('0');
-        setTimerNameInput('');
-        setColorChosen('red');
+        if(timerNameInput === ''){
+            Alert.alert("Your Timer Needs a Name")
+        }else if (secondsInput == 0 && minsInput == 0 && hoursInput == 0){
+            Alert.alert("Your Timer Needs a Duration")
+        }else{
+
+            setModalVisible(false)
+
+            props.onAddTimer({
+                title: timerNameInput,
+                seconds: secondsInput, 
+                minutes: minsInput, 
+                hours: hoursInput,
+                timerColorChosen: colorChosen})
+    
+            setSecondsInput('0');
+            setMinsInput('0');
+            setHoursInput('0');
+            setTimerNameInput('');
+            setColorChosen('red');
+
+        }
+
        
     }
 
