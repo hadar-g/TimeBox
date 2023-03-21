@@ -117,8 +117,8 @@ const onRenderLeftAction = () => {
           renderRightActions = {onRenderRightActions} >
         <View style = {!timerDone ?{...styles.container, borderColor: props.timerColorChosen, backgroundColor: timerBackgroundColor} : {...styles.container, backgroundColor: 'red'} }>
             <View style = {styles.texts}>
-                <Text style = {styles.title}>{props.title}</Text>
-                <Text style = {styles.clock}> {hours} : {mins} : {secs} </Text>
+                <Text style = {props.isDarkMode ? {...styles.title, color: 'white'}: styles.title}>{props.title}</Text>
+                <Text style = {props.isDarkMode ? {...styles.clock, color: 'white'}:styles.clock}> {hours} : {mins} : {secs} </Text>
             </View>
             <Pressable 
                 style = {({pressed}) => [isRunning ? ((pressed) ? {...styles.startStop, backgroundColor: 'red', opacity: 0.4} : {...styles.startStop, backgroundColor: 'red'} ): ((pressed) ? {...styles.startStop, backgroundColor: 'green', opacity: 0.4} : {...styles.startStop, backgroundColor: 'green'})]}
@@ -133,13 +133,15 @@ const onRenderLeftAction = () => {
 const styles = StyleSheet.create({
     title: {
         fontSize: 30,
-        fontFamily: 'Georgia'
+        fontFamily: 'Georgia',
+        // color: 'white'
     },
     clock: {
       paddingTop: 10,
         fontSize: 40,
         fontFamily: 'Helvetica',
-        marginLeft: -10
+        marginLeft: -10,
+        // color: 'white'
         
     },
     container: {
@@ -187,7 +189,7 @@ const styles = StyleSheet.create({
       texts: {
       //  backgroundColor: 'red'
       padding: 10,
-      margin: 10
+      margin: 10,
       }
     
 });
