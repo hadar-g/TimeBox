@@ -11,10 +11,35 @@ const [mins, setMins] = useState(props.m);
 const[hours, setHours] = useState(props.h);
 const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
+const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 
 const originalSeconds = props.s
 const orignalMinutes = props.m
 const originalHours = props.h
+
+useEffect(() => {
+    switch (props.timerColorChosen) {
+    case 'red':
+        setTimerBackgroundColor('rgba(255, 0, 0, 0.2)');
+      break;
+    case 'green':
+        setTimerBackgroundColor('rgba(0,255,0, 0.2)');
+      break;
+    case 'blue':
+        setTimerBackgroundColor('rgba(0,0,255, 0.2)');
+      break;
+    case 'orange':
+        setTimerBackgroundColor('rgba(255, 165, 0, 0.2)');
+      break;
+    case 'gray':
+        setTimerBackgroundColor('rgba(100,100,100, 0.2)');
+      break;
+    default:
+      setBackgroundColor('');
+      break;
+  }
+}, [])
+
 
 
 
@@ -90,18 +115,16 @@ const onRenderLeftAction = () => {
         <Swipeable  
           renderLeftActions = {onRenderLeftAction}
           renderRightActions = {onRenderRightActions} >
-        <View style = {!timerDone ?{...styles.container, borderColor: props.timerColorChosen} : {...styles.container, backgroundColor: 'red'} }>
-            <Text style = {styles.title}>{props.title}</Text>
-            <Text style = {styles.clock}> {hours} : {mins} : {secs} </Text>
-            <View style = {styles.buttons}>
+        <View style = {!timerDone ?{...styles.container, borderColor: props.timerColorChosen, backgroundColor: timerBackgroundColor} : {...styles.container, backgroundColor: 'red'} }>
+            <View style = {styles.texts}>
+                <Text style = {styles.title}>{props.title}</Text>
+                <Text style = {styles.clock}> {hours} : {mins} : {secs} </Text>
             </View>
-            <View style = {styles.buttons}>
             <Pressable 
                 style = {({pressed}) => [isRunning ? ((pressed) ? {...styles.startStop, backgroundColor: 'red', opacity: 0.4} : {...styles.startStop, backgroundColor: 'red'} ): ((pressed) ? {...styles.startStop, backgroundColor: 'green', opacity: 0.4} : {...styles.startStop, backgroundColor: 'green'})]}
                 onPress = {() => {setIsRunning(!isRunning)}}>
                 <Text style = {styles.buttonText}>{isRunning ? "Stop" : "Start"}</Text>
             </Pressable>
-            </View>
         </View>
              </Swipeable> 
              </GestureHandlerRootView>
@@ -109,89 +132,62 @@ const onRenderLeftAction = () => {
 }
 const styles = StyleSheet.create({
     title: {
-        fontSize: 35,
+        fontSize: 30,
         fontFamily: 'Georgia'
     },
     clock: {
       paddingTop: 10,
-        fontSize: 45,
-        fontFamily: 'Helvetica'
+        fontSize: 40,
+        fontFamily: 'Helvetica',
+        marginLeft: -10
         
     },
     container: {
-        flexDirection: 'column',
-        width: '95%',
+        flexDirection: 'row',
+        width: '100%',
+        height: 110,
         alignItems: 'center',
-       // borderColor: {timerBorderColor},
-        borderWidth: 5,
-        borderRadius: 25,
-        padding: 2,
-        margin: 10,
-        //marginRight: 0,
-        backgroundColor: 'white'
+        borderTopWidth: 5,
+        borderBottomWidth: 5,
+        padding: 5,
+        backgroundColor: 'white',
+        marginBottom:0.1,
     },
-    buttons: {
-        flexDirection: 'row'
-        
-    },
+
     startStop: {
-        backgroundColor: 'red',
-        height: 75,
-        width: 75,
+        height: 60,
+        width: 60,
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginLeft: '5%'
+        marginLeft: '2%',
+        marginTop: 5
     }, 
     buttonText: {
-        fontSize: 20,
+        fontSize: 19,
         fontFamily: 'Georgia',
         color: 'white'
-    },
-    removeButton: {
-        backgroundColor: 'red',
-        height: 75,
-        width: 75,
-        borderRadius: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: 0.6,
-        marginRight: '5%',
-        marginLeft: '5%'
-    },
-    resetButton: {
-        backgroundColor: 'blue',
-        height: 75,
-        width: 75,
-        borderRadius: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: 0.6,
-        marginRight: '5%',
-        marginLeft: '10%'
-    },
-    buttons: {
-        flexDirection: 'row',
-        padding: 5
-
     },
     leftSwipeStyle: {
         backgroundColor: 'red',
         justifyContent: 'center',
         width: '30%',
-        height: '90%',
-        marginTop: '3.5%',
-        alignItems: 'center'
+        height: '100%',
+        alignItems: 'center',
       },
       rightSwipeStyle: {
         backgroundColor: 'blue',
         justifyContent: 'center',
         width: '30%',
-        height: '90%',
-        marginTop: '3.5%',
-        alignItems: 'center'
+        height: '100%',
+        alignItems: 'center',
     
+      },
+      texts: {
+      //  backgroundColor: 'red'
+      padding: 10,
+      margin: 10
       }
     
 });
