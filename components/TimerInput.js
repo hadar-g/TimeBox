@@ -13,6 +13,7 @@ const TimerInput = (props) => {
     const[timerNameInput, setTimerNameInput] = useState('')
     const[modalVisible, setModalVisible] = useState(false)
     const[colorChosen, setColorChosen] = useState('red')
+    const[baseColor, setBaseColor] = useState('red')
     const[hueArray, setHueArray] = useState(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)'])
 
     const addTimerPlusSymbolWidth = 5
@@ -29,12 +30,12 @@ const TimerInput = (props) => {
     }
     
     useEffect(() => {
-        switch (colorChosen) {
+        switch (baseColor) {
             case 'red':
                 setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(220, 20, 60)']);
               break;
             case 'green':
-                setHueArray(['rgb(0,255,0)' ,'rgb(0, 192 , 0)' , 'rgb(0, 129, 0)', 'rgb(128, 128, 0)']);
+                setHueArray(['rgb(0, 129, 0)', 'rgb(0,255,0)' ,'rgb(0, 192 , 0)'  , 'rgb(128, 128, 0)']);
               break;
             case 'blue':
                 setHueArray(['rgb(0,0,255)' ,'rgb(0, 0 , 192)' , 'rgb(0, 0, 129)', 'rgb(70, 130, 180)']);
@@ -49,7 +50,7 @@ const TimerInput = (props) => {
                 setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)']);
               break;
           }
-    }, [colorChosen])
+    }, [baseColor])
 
     const onTimerSubmit = () => {0
         
@@ -143,43 +144,39 @@ const TimerInput = (props) => {
             <View style = {styles.secondaryHuePicker}>
                 <Pressable
                     style = {(colorChosen == hueArray[0]) ? {...styles.huePickerBox, backgroundColor: hueArray[0], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[0]}}
-                   // onPress = {setColorChosen(hueArray[0])}
-                    >
-                </Pressable>
+                    onPress = {console.log('pressed the first hue')}
+                    />
                 <Pressable
                     style = {{...styles.huePickerBox, backgroundColor: hueArray[1]}}
-                   // onPress = {setColorChosen(hueArray[1])}
-                    >
-                </Pressable>
+                    onPress = {console.log("pressed the second hue")}
+                    />
                 <Pressable
                     style = {{...styles.huePickerBox, backgroundColor: hueArray[2]}}
                    // onPress = {setColorChosen(hueArray[2])}
-                    >
-                </Pressable>
+                    />
                 <Pressable
                     style = {{...styles.huePickerBox, backgroundColor: hueArray[3]}}
                    // onPress = {setColorChosen(hueArray[3])}
-                    >
-                </Pressable>
+                    />
 
             </View>
 
         <View style = {styles.colorPicker}>
             <Pressable 
-                style = {(colorChosen == 'red') ? {...styles.colorPickBox, backgroundColor: 'red', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'red'} }
-                onPress={()=>{setColorChosen('red')}} />
+                style = {(baseColor == 'red') ? {...styles.colorPickBox, backgroundColor: 'red', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'red'} }
+                onPress={()=>{setBaseColor('red')}} />
             <Pressable 
-                style = {(colorChosen == 'green') ? {...styles.colorPickBox, backgroundColor: 'green', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'green'}}
-                onPress={()=>{setColorChosen('green')}} />
+                style = {(baseColor == 'green') ? {...styles.colorPickBox, backgroundColor: 'green', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'green'}}
+                onPress={()=>{setBaseColor('green')}} />
             <Pressable 
-                style = {(colorChosen == 'blue') ? {...styles.colorPickBox, backgroundColor: 'blue', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'blue'}}
-                onPress={()=>{setColorChosen('blue')}} />
+                style = {(baseColor == 'blue') ? {...styles.colorPickBox, backgroundColor: 'blue', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'blue'}}
+                onPress={()=>{setBaseColor('blue')}} />
             <Pressable 
-                style = {(colorChosen == 'gray') ? {...styles.colorPickBox, backgroundColor: 'gray', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'gray'}} 
-                onPress={()=>{setColorChosen('gray')}}/>
+                style = {(baseColor == 'gray') ? {...styles.colorPickBox, backgroundColor: 'gray', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'gray'}} 
+                onPress={()=>{setBaseColor('gray')}}/>
             <Pressable 
-                style = {(colorChosen == 'orange') ? {...styles.colorPickBox, backgroundColor: 'orange', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'orange'}} 
-                onPress={()=>{setColorChosen('orange')}}/>
+                style = {(baseColor == 'orange') ? {...styles.colorPickBox, backgroundColor: 'orange', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'orange'}} 
+                onPress={()=>{setBaseColor('orange')}}/>
         </View>
            <Button title = "set timer" onPress={()=>onTimerSubmit()}/>
            <Button title = "Close" onPress ={() => setModalVisible(false)}/>

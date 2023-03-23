@@ -120,7 +120,7 @@ const onRenderLeftAction = () => {
           renderLeftActions = {onRenderLeftAction}
           renderRightActions = {onRenderRightActions} >
         <View style = {props.isDarkMode ?   {backgroundColor: 'black'} :{backgroundColor: 'white'}}> 
-        <View style = {!timerDone ?{...styles.container, borderColor: props.timerColorChosen, backgroundColor: timerBackgroundColor} : {...styles.container, backgroundColor: 'red'} }>
+        <View style = {!timerDone ?{...styles.container, backgroundColor: timerBackgroundColor} : {...styles.container, backgroundColor: 'red'} }>
           
             <View style = {styles.texts}>
                 <Text style = {props.isDarkMode ? {...styles.title, color: 'white'}: styles.title}>{props.title}</Text>
