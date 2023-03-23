@@ -115,7 +115,9 @@ const onRenderLeftAction = () => {
         <Swipeable  
           renderLeftActions = {onRenderLeftAction}
           renderRightActions = {onRenderRightActions} >
+        <View style = {props.isDarkMode ?   {backgroundColor: 'black'} :{backgroundColor: 'white'}}> 
         <View style = {!timerDone ?{...styles.container, borderColor: props.timerColorChosen, backgroundColor: timerBackgroundColor} : {...styles.container, backgroundColor: 'red'} }>
+          
             <View style = {styles.texts}>
                 <Text style = {props.isDarkMode ? {...styles.title, color: 'white'}: styles.title}>{props.title}</Text>
                 <Text style = {props.isDarkMode ? {...styles.clock, color: 'white'}:styles.clock}> {hours} : {mins} : {secs} </Text>
@@ -125,6 +127,8 @@ const onRenderLeftAction = () => {
                 onPress = {() => {setIsRunning(!isRunning)}}>
                 <Text style = {styles.buttonText}>{isRunning ? "Stop" : "Start"}</Text>
             </Pressable>
+            
+        </View>
         </View>
              </Swipeable> 
              </GestureHandlerRootView>
@@ -190,7 +194,7 @@ const styles = StyleSheet.create({
       //  backgroundColor: 'red'
       padding: 10,
       margin: 10,
-      }
+      },
     
 });
 

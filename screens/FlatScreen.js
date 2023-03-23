@@ -38,7 +38,7 @@ export default function FlatScreen() {
         </Pressable>
       </View>
 
-      <Text style={isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>Welcome to the Timers Page</Text>
+      <Text style={isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>My Timers</Text>
 
       <TimerInput onAddTimer = {addTimer} />
 
@@ -85,7 +85,9 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 29,
-    padding: 10
+    padding: 10,
+    fontWeight: 'bold',
+    fontFamily: "Helvetica Neue"
     // color: 'white'
   },
   scroll: {
