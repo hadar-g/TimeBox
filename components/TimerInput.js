@@ -11,6 +11,11 @@ const TimerInput = (props) => {
     const[modalVisible, setModalVisible] = useState(false)
     const[colorChosen, setColorChosen] = useState('red')
 
+    const addTimerPlusSymbolWidth = 8
+    const addTimerPlusSymbolHeight = 40
+    const addTimerPlusMarginLeftOffset = -1 * ((addTimerPlusSymbolHeight / 2) - (addTimerPlusSymbolWidth / 2))
+    const addTimerPlusMarginTopOffset = -1 * ((addTimerPlusSymbolHeight / 2) + (addTimerPlusSymbolWidth / 2))
+
     const createPickerArray = (max) => {
         const pickerArray =[]
         for(let i = 0; i <= max; i++){
@@ -53,11 +58,19 @@ const TimerInput = (props) => {
 
     return(
     <View style = {styles.inputScreen}>
+
             <View style = {styles.addTimerButton}>
-            <Button 
-                title ="Add Timer" 
-                onPress={() => setModalVisible(true)}/>
+            <Pressable
+                onPress={() => setModalVisible(true)}>
+                <View style = {{width: addTimerPlusSymbolWidth, height: addTimerPlusSymbolHeight, backgroundColor: 'rgb(255,149,0)'}}></View>
+                <View style = {{width: addTimerPlusSymbolHeight, height: addTimerPlusSymbolWidth, marginTop: addTimerPlusMarginTopOffset, marginLeft: addTimerPlusMarginLeftOffset, backgroundColor: 'rgb(255,149,0)'}}></View>
+            </Pressable>
             </View>
+
+            {/* <Button 
+                title ="Add Timer" 
+                onPress={() => setModalVisible(true)}/> */}
+            
         <Modal
             visible={modalVisible}
             animationType="slide"
@@ -176,9 +189,10 @@ const styles = StyleSheet.create({
         margin: -10
     },
     addTimerButton: {
-        width: 250,
+       // backgroundColor: 'red',
+        width: 200,
         alignItems: 'flex-end',
-        padding: 10
+        paddingBottom: 30
     }
 });
 

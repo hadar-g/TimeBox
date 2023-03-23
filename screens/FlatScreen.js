@@ -74,21 +74,19 @@ export default function FlatScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+   // flex: 1,
     flexDirection: 'column',
     justifyContent: 'top',
     paddingTop: 40,
     alignItems: 'flex-start',
-    zIndex: 1,
     elevation: 1
-   // backgroundColor: 'rgba(0, 0, 0, 0.9)'
   },
   welcome: {
     fontSize: 29,
     padding: 10,
     fontWeight: 'bold',
-    fontFamily: "Helvetica Neue"
-    // color: 'white'
+    fontFamily: "Helvetica Neue",
+    marginTop: -20
   },
   scroll: {
     width: '100%'
