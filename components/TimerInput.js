@@ -4,7 +4,6 @@ import { useState, React, useEffect} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { GestureHandlerRootView, TapGestureHandler } from 'react-native-gesture-handler';
 
 const TimerInput = (props) => {
     const[secondsInput, setSecondsInput] = useState('0')
@@ -12,7 +11,7 @@ const TimerInput = (props) => {
     const[hoursInput, setHoursInput] = useState('0');
     const[timerNameInput, setTimerNameInput] = useState('')
     const[modalVisible, setModalVisible] = useState(false)
-    const[colorChosen, setColorChosen] = useState('red')
+    const[colorChosen, setColorChosen] = useState()
     const[baseColor, setBaseColor] = useState('red')
     const[hueArray, setHueArray] = useState(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)'])
 
@@ -30,6 +29,7 @@ const TimerInput = (props) => {
     }
     
     useEffect(() => {
+        
         switch (baseColor) {
             case 'red':
                 setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(220, 20, 60)']);
@@ -50,6 +50,9 @@ const TimerInput = (props) => {
                 setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)']);
               break;
           }
+          
+          setColorChosen(hueArray[0])
+          //console.log('use effect')
     }, [baseColor])
 
     const onTimerSubmit = () => {0
@@ -143,20 +146,20 @@ const TimerInput = (props) => {
 
             <View style = {styles.secondaryHuePicker}>
                 <Pressable
-                    style = {(colorChosen == hueArray[0]) ? {...styles.huePickerBox, backgroundColor: hueArray[0], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[0]}}
-                    onPress = {console.log('pressed the first hue')}
+                    style = {(colorChosen === hueArray[0]) ? {...styles.huePickerBox, backgroundColor: hueArray[0], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[0]}}
+                    onPress = {() => {setColorChosen(hueArray[0])}}
                     />
                 <Pressable
-                    style = {{...styles.huePickerBox, backgroundColor: hueArray[1]}}
-                    onPress = {console.log("pressed the second hue")}
+                    style = {(colorChosen === hueArray[1]) ? {...styles.huePickerBox, backgroundColor: hueArray[1], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[1]}}
+                    onPress = {() => {setColorChosen(hueArray[1])}}
                     />
                 <Pressable
-                    style = {{...styles.huePickerBox, backgroundColor: hueArray[2]}}
-                   // onPress = {setColorChosen(hueArray[2])}
+                    style = {(colorChosen === hueArray[2]) ? {...styles.huePickerBox, backgroundColor: hueArray[2], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[2]}}
+                    onPress = {() => {setColorChosen(hueArray[2])}}
                     />
                 <Pressable
-                    style = {{...styles.huePickerBox, backgroundColor: hueArray[3]}}
-                   // onPress = {setColorChosen(hueArray[3])}
+                    style = {(colorChosen === hueArray[3]) ? {...styles.huePickerBox, backgroundColor: hueArray[3], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[3]}}
+                    onPress = {() => {setColorChosen(hueArray[3])}}
                     />
 
             </View>
