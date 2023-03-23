@@ -27,7 +27,7 @@ useEffect(() => {
         setTimerBackgroundColor(`rgba(255, 0, 0, ${opacityVal})`);
       break;
     case 'green':
-        setTimerBackgroundColor(`rgba(0,255,0, ${opacityVal})`);
+        setTimerBackgroundColor(`rgba(0,200,0, ${opacityVal})`);
       break;
     case 'blue':
         setTimerBackgroundColor(`rgba(0, 0, 255, ${opacityVal})`);
