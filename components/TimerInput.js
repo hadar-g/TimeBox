@@ -2,6 +2,8 @@
 import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable, Alert} from 'react-native';
 import { useState, React} from 'react';
 import {Picker} from '@react-native-picker/picker';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 const TimerInput = (props) => {
     const[secondsInput, setSecondsInput] = useState('0')
@@ -11,7 +13,7 @@ const TimerInput = (props) => {
     const[modalVisible, setModalVisible] = useState(false)
     const[colorChosen, setColorChosen] = useState('red')
 
-    const addTimerPlusSymbolWidth = 8
+    const addTimerPlusSymbolWidth = 5
     const addTimerPlusSymbolHeight = 40
     const addTimerPlusMarginLeftOffset = -1 * ((addTimerPlusSymbolHeight / 2) - (addTimerPlusSymbolWidth / 2))
     const addTimerPlusMarginTopOffset = -1 * ((addTimerPlusSymbolHeight / 2) + (addTimerPlusSymbolWidth / 2))
@@ -38,6 +40,7 @@ const TimerInput = (props) => {
             setModalVisible(false)
 
             props.onAddTimer({
+                id: uuidv4(),
                 title: timerNameInput,
                 seconds: secondsInput, 
                 minutes: minsInput, 
@@ -61,6 +64,7 @@ const TimerInput = (props) => {
 
             <View style = {styles.addTimerButton}>
             <Pressable
+                style = {({pressed}) => [((pressed) ? { opacity: 0.4} : {} )]}
                 onPress={() => setModalVisible(true)}>
                 <View style = {{width: addTimerPlusSymbolWidth, height: addTimerPlusSymbolHeight, backgroundColor: 'rgb(255,149,0)'}}></View>
                 <View style = {{width: addTimerPlusSymbolHeight, height: addTimerPlusSymbolWidth, marginTop: addTimerPlusMarginTopOffset, marginLeft: addTimerPlusMarginLeftOffset, backgroundColor: 'rgb(255,149,0)'}}></View>
@@ -192,7 +196,8 @@ const styles = StyleSheet.create({
        // backgroundColor: 'red',
         width: 200,
         alignItems: 'flex-end',
-        paddingBottom: 30
+        paddingBottom: 30,
+        marginBottom: 20
     }
 });
 

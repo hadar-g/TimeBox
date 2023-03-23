@@ -3,6 +3,7 @@ import {  StyleSheet, Text, View, ScrollView, Pressable, Image} from 'react-nati
 import FlatTimer from '../components/FlatTimer';
 import TimerInput from '../components/TimerInput';
 import { useState, React} from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function FlatScreen() {
@@ -14,8 +15,8 @@ export default function FlatScreen() {
   const addTimer = (timerObject) => {
    setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
     setIndex(index => index + 1)
-    console.log(timersArray)
-    const timerColorChosen = timerObject.timerColorChosen
+    //console.log(timersArray)
+   // const timerColorChosen = timerObject.timerColorChosen
   }
 
   const removeTimer = (index) => {
@@ -47,7 +48,7 @@ export default function FlatScreen() {
          return(
 
           <FlatTimer 
-            key = {timerObject.index}
+            key = {timerObject.id}
             s = {timerObject.seconds} 
             m = {timerObject.minutes} 
             h ={timerObject.hours} 
@@ -74,7 +75,7 @@ export default function FlatScreen() {
 
 const styles = StyleSheet.create({
   container: {
-   // flex: 1,
+   flex: 1,
     flexDirection: 'column',
     justifyContent: 'top',
     paddingTop: 40,
@@ -85,8 +86,9 @@ const styles = StyleSheet.create({
     fontSize: 29,
     padding: 10,
     fontWeight: 'bold',
-    fontFamily: "Helvetica Neue",
-    marginTop: -20
+    fontFamily: "Montserrat",
+    marginTop: -20,
+    marginBottom: 30
   },
   scroll: {
     width: '100%'

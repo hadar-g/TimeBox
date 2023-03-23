@@ -4,6 +4,7 @@ import { useState, useEffect, React, Component, forwardRef, useImperativeHandle,
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+
 const FlatTimer = (props) => {
 
 const [secs, setSecs] = useState(props.s);
@@ -12,6 +13,7 @@ const[hours, setHours] = useState(props.h);
 const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
+
 
 const originalSeconds = props.s
 const orignalMinutes = props.m
@@ -153,8 +155,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 110,
         alignItems: 'center',
-        borderTopWidth: 5,
-        borderBottomWidth: 5,
+    //    borderTopWidth: 5,
+    //    borderBottomWidth: 5,
         padding: 5,
         backgroundColor: 'white',
         marginBottom:0.1,
