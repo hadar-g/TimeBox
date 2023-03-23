@@ -21,8 +21,8 @@ const orignalMinutes = props.m
 const originalHours = props.h
 
 useEffect(() => {
-    {props.isDarkMode ? setOpacityVal(0.6) : setOpacityVal(0.4)}
-    const myAdjustedColor = `${props.timerColorChosen.substr(0,3)}a${props.timerColorChosen.substr(3, props.timerColorChosen.length-4)}, ${opacityVal})`
+    {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.3)}
+    const myAdjustedColor = `rgba${props.timerColorChosen.substr(3, props.timerColorChosen.length-4)}, ${opacityVal})`
     setTimerBackgroundColor(myAdjustedColor)
     //setTimerBackgroundColor(props.timerColorChosen)
 //     {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.2) }
