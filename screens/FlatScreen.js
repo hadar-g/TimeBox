@@ -15,8 +15,6 @@ export default function FlatScreen() {
   const addTimer = (timerObject) => {
    setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
     setIndex(index => index + 1)
-    //console.log(timersArray)
-   // const timerColorChosen = timerObject.timerColorChosen
   }
 
   const removeTimer = (index) => {
