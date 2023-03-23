@@ -4,21 +4,13 @@ import FlatTimer from '../components/FlatTimer';
 import TimerInput from '../components/TimerInput';
 import { useState, React} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-const allColorTest = require('../components/AllColorTest')
+const allColorTest = require('../components/Constants/AllColorTest')
+const defaultTimer = require('../components/Constants/DefaultTimer')
 
 
 export default function FlatScreen() {
 
-  // const[timersArray, setTimersArray] = useState([
-  //   {
-  //     key: uuidv4(),
-  //     title: "My First Timer",
-  //     seconds: 0, 
-  //     minutes: 5, 
-  //     hours: 0,
-  //     timerColorChosen: 'rgb(255,0,0)'
-  //   }
-  // ])
+ // const[timersArray, setTimersArray] = useState(defaultTimer)
    const[timersArray, setTimersArray] = useState(allColorTest)
   const[index, setIndex] = useState(0)
   const[isDarkMode, setIsDarkMode] = useState(false)
