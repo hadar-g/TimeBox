@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable, Alert} from 'react-native';
-import { useState, React} from 'react';
+import { useState, React, useEffect} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,7 +13,7 @@ const TimerInput = (props) => {
     const[timerNameInput, setTimerNameInput] = useState('')
     const[modalVisible, setModalVisible] = useState(false)
     const[colorChosen, setColorChosen] = useState('red')
-    const[secondaryColorModalVisible, setSecondaryColorModalVisible] = useState(false)
+    const[hueArray, setHueArray] = useState(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)'])
 
     const addTimerPlusSymbolWidth = 5
     const addTimerPlusSymbolHeight = 40
@@ -28,6 +28,28 @@ const TimerInput = (props) => {
         return pickerArray
     }
     
+    useEffect(() => {
+        switch (colorChosen) {
+            case 'red':
+                setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(220, 20, 60)']);
+              break;
+            case 'green':
+                setHueArray(['rgb(0,255,0)' ,'rgb(0, 192 , 0)' , 'rgb(0, 129, 0)', 'rgb(128, 128, 0)']);
+              break;
+            case 'blue':
+                setHueArray(['rgb(0,0,255)' ,'rgb(0, 0 , 192)' , 'rgb(0, 0, 129)', 'rgb(70, 130, 180)']);
+              break;
+            case 'orange':
+                setHueArray(['rgb(255, 140, 0)' ,'rgb(255, 165, 0)' , 'rgb(255, 127, 80)', 'rgb(255, 160, 122)']);
+              break;
+            case 'gray':
+                setHueArray(['rgb(64, 64, 64)' ,'rgb(128, 128, 128)' , 'rgb(192, 192, 192)', 'rgb(220, 220, 220)']);
+              break;
+            default:
+                setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)']);
+              break;
+          }
+    }, [colorChosen])
 
     const onTimerSubmit = () => {0
         
@@ -117,25 +139,35 @@ const TimerInput = (props) => {
             </Picker>
             <Text style = {styles.labels}>Secs</Text>
         </View>
-        <Modal 
-            visible = {secondaryColorModalVisible}
-            transparent = {true}>
-                <View style = {styles.secondaryColorModal}> 
-                </View>
-        </Modal>
-        <GestureHandlerRootView>
+
+            <View style = {styles.secondaryHuePicker}>
+                <Pressable
+                    style = {(colorChosen == hueArray[0]) ? {...styles.huePickerBox, backgroundColor: hueArray[0], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[0]}}
+                   // onPress = {setColorChosen(hueArray[0])}
+                    >
+                </Pressable>
+                <Pressable
+                    style = {{...styles.huePickerBox, backgroundColor: hueArray[1]}}
+                   // onPress = {setColorChosen(hueArray[1])}
+                    >
+                </Pressable>
+                <Pressable
+                    style = {{...styles.huePickerBox, backgroundColor: hueArray[2]}}
+                   // onPress = {setColorChosen(hueArray[2])}
+                    >
+                </Pressable>
+                <Pressable
+                    style = {{...styles.huePickerBox, backgroundColor: hueArray[3]}}
+                   // onPress = {setColorChosen(hueArray[3])}
+                    >
+                </Pressable>
+
+            </View>
+
         <View style = {styles.colorPicker}>
-        <TapGestureHandler
-             numberOfTaps={2}
-            onActivated={() => (
-                setSecondaryColorModalVisible(true)
-               // console.log("double tapped")
-            )}> 
             <Pressable 
                 style = {(colorChosen == 'red') ? {...styles.colorPickBox, backgroundColor: 'red', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'red'} }
                 onPress={()=>{setColorChosen('red')}} />
-        </TapGestureHandler>
-            
             <Pressable 
                 style = {(colorChosen == 'green') ? {...styles.colorPickBox, backgroundColor: 'green', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'green'}}
                 onPress={()=>{setColorChosen('green')}} />
@@ -149,7 +181,6 @@ const TimerInput = (props) => {
                 style = {(colorChosen == 'orange') ? {...styles.colorPickBox, backgroundColor: 'orange', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'orange'}} 
                 onPress={()=>{setColorChosen('orange')}}/>
         </View>
-        </GestureHandlerRootView>
            <Button title = "set timer" onPress={()=>onTimerSubmit()}/>
            <Button title = "Close" onPress ={() => setModalVisible(false)}/>
         </View>
@@ -196,8 +227,16 @@ const styles = StyleSheet.create({
     colorPickBox: {
         width: 30,
         height: 30,
-        margin: 15,
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: -20
         
+    },
+    huePickerBox:{
+        width: 30,
+        height: 30,
+        marginLeft: 15,
+        marginRight: 15,
     },
     labels: {
         fontSize: 15,
@@ -210,12 +249,9 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
         marginBottom: 20
     },
-    secondaryColorModal: {
-        height: 50,
-        width: 200,
-        marginTop: '110%',
-        marginLeft: '20%',
-     //   backgroundColor: {colorChosen}
+    secondaryHuePicker: {
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });
 
