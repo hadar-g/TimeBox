@@ -8,7 +8,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function FlatScreen() {
 
-  const[timersArray, setTimersArray] = useState([])
+  const[timersArray, setTimersArray] = useState([
+    {
+      key: uuidv4(),
+      title: "My First Timer",
+      seconds: 0, 
+      minutes: 5, 
+      hours: 0,
+      timerColorChosen: 'rgb(255,0,0)'
+    }
+  ])
   const[index, setIndex] = useState(0)
   const[isDarkMode, setIsDarkMode] = useState(false)
 
@@ -46,7 +55,7 @@ export default function FlatScreen() {
          return(
 
           <FlatTimer 
-            key = {timerObject.id}
+            key = {timerObject.key}
             s = {timerObject.seconds} 
             m = {timerObject.minutes} 
             h ={timerObject.hours} 

@@ -72,7 +72,7 @@ const TimerInput = (props) => {
             setModalVisible(false)
 
             props.onAddTimer({
-                id: uuidv4(),
+                key: uuidv4(),
                 title: timerNameInput,
                 seconds: secondsInput, 
                 minutes: minsInput, 
