@@ -1,0 +1,26 @@
+{
+    "RedOne" : "rgb(255,0,0)",
+    "RedTwo": "rgb(192,0,0)",
+    "RedThree": "rgb(129,0,0)",
+    "RedFour": "rgb(220,20,60)",
+
+    "GreenOne": "rgb(0,129,0)",
+    "GreenTwo": "rgb(0,255,0)",
+    "GreenThree": "rgb(0,192,0)",
+    "GreenFour": "rgb(128,128,0)",
+
+    "BlueOne": "rgb(0,0,255)",
+    "BlueTwo": "rgb(0,0,192)",
+    "BlueThree": "rgb(0,0,129)",
+    "BlueFour": "rgb(70,130,180)",
+
+    "GrayOne": "rgb(64,64,64)",
+    "GrayTwo": "rgb(128,128,128)",
+    "GrayThree": "rgb(192, 192,192)",
+    "GrayFour": "rgb(220,220,220)",
+
+    "OrangeOne": "rgb(255,140, 0)",
+    "OrangeTwo": "rgb(255,165,0)",
+    "OrangeThree": "rgb(255,127,80)",
+    "OrangeFour": "rgb(255,160,122)"
+}

@@ -4,8 +4,10 @@ import { useState, React, useEffect} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+const colorValues = require('./ColorVals.json')
 
 const TimerInput = (props) => {
+    
     const[secondsInput, setSecondsInput] = useState('0')
     const[minsInput, setMinsInput] = useState('0');
     const[hoursInput, setHoursInput] = useState('0');
@@ -13,7 +15,7 @@ const TimerInput = (props) => {
     const[modalVisible, setModalVisible] = useState(false)
     const[colorChosen, setColorChosen] = useState()
     const[baseColor, setBaseColor] = useState('red')
-    const[hueArray, setHueArray] = useState(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)'])
+    const[hueArray, setHueArray] = useState([colorValues.RedOne ,colorValues.RedTwo , colorValues.RedThree, colorValues.RedFour])
 
     const addTimerPlusSymbolWidth = 5
     const addTimerPlusSymbolHeight = 40
@@ -32,28 +34,28 @@ const TimerInput = (props) => {
         
         switch (baseColor) {
             case 'red':
-                setHueArray(['rgb(255,0,0)' ,'rgb(192,0 ,0)' , 'rgb(129,0,0)', 'rgb(220,20,60)']);
-                setColorChosen('rgb(255,0,0)');
+                setHueArray([colorValues.RedOne ,colorValues.RedTwo , colorValues.RedThree, colorValues.RedFour]);
+                setColorChosen(colorValues.RedOne);
               break;
             case 'green':
-                setHueArray(['rgb(0,129,0)', 'rgb(0,255,0)' ,'rgb(0,192,0)'  , 'rgb(128,128,0)']);
-                setColorChosen('rgb(0,129,0)');
+                setHueArray([colorValues.GreenOne, colorValues.GreenTwo, colorValues.GreenThree, colorValues.GreenFour]);
+                setColorChosen(colorValues.GreenOne);
               break;
             case 'blue':
-                setHueArray(['rgb(0,0,255)' ,'rgb(0,0,192)' , 'rgb(0,0,129)', 'rgb(70,130,180)']);
-                setColorChosen('rgb(0,0,255)')
-              break;
-            case 'orange':
-                setHueArray(['rgb(255,140, 0)' ,'rgb(255,165,0)' , 'rgb(255,127,80)', 'rgb(255,160,122)']);
-                setColorChosen('rgb(255,140,0)')
+                setHueArray([colorValues.BlueOne, colorValues.BlueTwo, colorValues.BlueThree, colorValues.BlueFour]);
+                setColorChosen(colorValues.BlueOne)
               break;
             case 'gray':
-                setHueArray(['rgb(64,64,64)' ,'rgb(128,128,128)' , 'rgb(192, 192,192)', 'rgb(220,220,220)']);
-                setColorChosen('rgb(64,64,64)')
+                setHueArray([colorValues.GrayOne, colorValues.GrayTwo, colorValues.GrayThree, colorValues.GrayFour]);
+                setColorChosen(colorValues.GrayOne)
+              break;
+            case 'orange':
+                setHueArray([colorValues.OrangeOne, colorValues.OrangeTwo, colorValues.OrangeThree, colorValues.OrangeFour]);
+                setColorChosen(colorValues.OrangeOne)
               break;
             default:
-                setHueArray(['rgb(255,0,0)' ,'rgb(192,0 ,0)' , 'rgb(129,0,0)', 'rgb(66,0,0)']);
-                setColorChosen('rgb(255,0,0)')
+                setHueArray([colorValues.RedOne ,colorValues.RedTwo , colorValues.RedThree, colorValues.RedFour]);
+                setColorChosen(colorValues.RedOne)
               break;
           }
         
@@ -84,7 +86,7 @@ const TimerInput = (props) => {
             setHoursInput('0');
             setTimerNameInput('');
             setBaseColor('red')
-            setColorChosen('rgb(255,0,0)')
+            setColorChosen(colorValues.RedOne)
         }
 
        
