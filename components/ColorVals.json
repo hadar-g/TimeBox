@@ -1,18 +1,18 @@
 {
     "RedOne" : "rgb(255,0,0)",
-    "RedTwo": "rgb(192,0,0)",
-    "RedThree": "rgb(129,0,0)",
-    "RedFour": "rgb(220,20,60)",
+    "RedTwo": "rgb(255,51,51)",
+    "RedThree": "rgb(255,102,102)",
+    "RedFour": "rgb(255,153,153)",
 
-    "GreenOne": "rgb(0,129,0)",
-    "GreenTwo": "rgb(0,255,0)",
-    "GreenThree": "rgb(0,192,0)",
-    "GreenFour": "rgb(128,128,0)",
+    "GreenOne": "rgb(0,102,0)",
+    "GreenTwo": "rgb(0,153,0)",
+    "GreenThree": "rgb(0,204,0)",
+    "GreenFour": "rgb(128,255,0)",
 
-    "BlueOne": "rgb(0,0,255)",
-    "BlueTwo": "rgb(0,0,192)",
-    "BlueThree": "rgb(0,0,129)",
-    "BlueFour": "rgb(70,130,180)",
+    "BlueOne": "rgb(0,0,150)",
+    "BlueTwo": "rgb(0,0,204)",
+    "BlueThree": "rgb(0,0,255)",
+    "BlueFour": "rgb(51,51,255)",
 
     "GrayOne": "rgb(64,64,64)",
     "GrayTwo": "rgb(128,128,128)",
@@ -20,7 +20,7 @@
     "GrayFour": "rgb(220,220,220)",
 
     "OrangeOne": "rgb(255,140, 0)",
-    "OrangeTwo": "rgb(255,165,0)",
-    "OrangeThree": "rgb(255,127,80)",
-    "OrangeFour": "rgb(255,160,122)"
+    "OrangeTwo": "rgb(255,152,51)",
+    "OrangeThree": "rgb(255,178,102)",
+    "OrangeFour": "rgb(255,204,153)"
 }
