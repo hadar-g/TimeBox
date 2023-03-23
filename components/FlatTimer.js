@@ -13,6 +13,7 @@ const[hours, setHours] = useState(props.h);
 const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
+const [opacityVal, setOpacityVal] = useState(0.2)
 
 
 const originalSeconds = props.s
@@ -20,27 +21,28 @@ const orignalMinutes = props.m
 const originalHours = props.h
 
 useEffect(() => {
+    {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.2) }
     switch (props.timerColorChosen) {
     case 'red':
-        setTimerBackgroundColor('rgba(255, 0, 0, 0.2)');
+        setTimerBackgroundColor(`rgba(255, 0, 0, ${opacityVal})`);
       break;
     case 'green':
-        setTimerBackgroundColor('rgba(0,255,0, 0.2)');
+        setTimerBackgroundColor(`rgba(0,255,0, ${opacityVal})`);
       break;
     case 'blue':
-        setTimerBackgroundColor('rgba(0,0,255, 0.2)');
+        setTimerBackgroundColor(`rgba(0, 0, 255, ${opacityVal})`);
       break;
     case 'orange':
-        setTimerBackgroundColor('rgba(255, 165, 0, 0.2)');
+        setTimerBackgroundColor(`rgba(255, 165, 0, ${opacityVal})`);
       break;
     case 'gray':
-        setTimerBackgroundColor('rgba(100,100,100, 0.2)');
+        setTimerBackgroundColor(`rgba(100,100,100, ${opacityVal})`);
       break;
     default:
       setBackgroundColor('');
       break;
   }
-}, [])
+}, [props.isDarkMode, opacityVal])
 
 
 
@@ -139,13 +141,13 @@ const onRenderLeftAction = () => {
 const styles = StyleSheet.create({
     title: {
         fontSize: 30,
-        fontFamily: 'Georgia',
+        fontFamily: 'Helvetica Neue',
         // color: 'white'
     },
     clock: {
       paddingTop: 10,
-        fontSize: 40,
-        fontFamily: 'Helvetica',
+        fontSize: 35,
+        fontFamily: 'Helvetica Neue',
         marginLeft: -10,
         // color: 'white'
         
@@ -158,7 +160,7 @@ const styles = StyleSheet.create({
     //    borderTopWidth: 5,
     //    borderBottomWidth: 5,
         padding: 5,
-        backgroundColor: 'white',
+     //   backgroundColor: 'white',
         marginBottom:0.1,
     },
 

@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 29,
     padding: 10,
     fontWeight: 'bold',
-    fontFamily: "Montserrat",
+    fontFamily: "Helvetica Neue",
     marginTop: -20,
     marginBottom: 30
   },
