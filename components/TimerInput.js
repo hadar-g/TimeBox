@@ -33,26 +33,30 @@ const TimerInput = (props) => {
         switch (baseColor) {
             case 'red':
                 setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(220, 20, 60)']);
+                setColorChosen('rgb(255,0,0)');
               break;
             case 'green':
                 setHueArray(['rgb(0, 129, 0)', 'rgb(0,255,0)' ,'rgb(0, 192 , 0)'  , 'rgb(128, 128, 0)']);
+                setColorChosen('rgb(0, 129, 0)');
               break;
             case 'blue':
                 setHueArray(['rgb(0,0,255)' ,'rgb(0, 0 , 192)' , 'rgb(0, 0, 129)', 'rgb(70, 130, 180)']);
+                setColorChosen('rgb(0,0,255)')
               break;
             case 'orange':
                 setHueArray(['rgb(255, 140, 0)' ,'rgb(255, 165, 0)' , 'rgb(255, 127, 80)', 'rgb(255, 160, 122)']);
+                setColorChosen('rgb(255, 140, 0)')
               break;
             case 'gray':
                 setHueArray(['rgb(64, 64, 64)' ,'rgb(128, 128, 128)' , 'rgb(192, 192, 192)', 'rgb(220, 220, 220)']);
+                setColorChosen('rgb(64, 64, 64)')
               break;
             default:
                 setHueArray(['rgb(255,0,0)' ,'rgb(192, 0 , 0)' , 'rgb(129, 0, 0)', 'rgb(66, 0, 0)']);
+                setColorChosen('rgb(255,0,0)')
               break;
           }
-          
-          setColorChosen(hueArray[0])
-          //console.log('use effect')
+        
     }, [baseColor])
 
     const onTimerSubmit = () => {0
