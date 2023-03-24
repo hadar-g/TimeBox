@@ -150,26 +150,6 @@ const TimerInput = (props) => {
             <Text style = {styles.labels}>Secs</Text>
         </View>
 
-            <View style = {styles.secondaryHuePicker}>
-                <Pressable
-                    style = {(colorChosen === hueArray[0]) ? {...styles.huePickerBox, backgroundColor: hueArray[0], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[0]}}
-                    onPress = {() => {setColorChosen(hueArray[0])}}
-                    />
-                <Pressable
-                    style = {(colorChosen === hueArray[1]) ? {...styles.huePickerBox, backgroundColor: hueArray[1], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[1]}}
-                    onPress = {() => {setColorChosen(hueArray[1])}}
-                    />
-                <Pressable
-                    style = {(colorChosen === hueArray[2]) ? {...styles.huePickerBox, backgroundColor: hueArray[2], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[2]}}
-                    onPress = {() => {setColorChosen(hueArray[2])}}
-                    />
-                <Pressable
-                    style = {(colorChosen === hueArray[3]) ? {...styles.huePickerBox, backgroundColor: hueArray[3], borderWidth: 5} : {...styles.huePickerBox, backgroundColor: hueArray[3]}}
-                    onPress = {() => {setColorChosen(hueArray[3])}}
-                    />
-
-            </View>
-
         <View style = {styles.colorPicker}>
             <Pressable 
                 style = {(baseColor == 'red') ? {...styles.colorPickBox, backgroundColor: 'red', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'red'} }
@@ -187,6 +167,25 @@ const TimerInput = (props) => {
                 style = {(baseColor == 'orange') ? {...styles.colorPickBox, backgroundColor: 'orange', borderWidth: 5} : {...styles.colorPickBox, backgroundColor: 'orange'}} 
                 onPress={()=>{setBaseColor('orange')}}/>
         </View>
+        <View style = {styles.secondaryHuePicker}>
+                <Pressable
+                    style = {(colorChosen === hueArray[0]) ? {...styles.huePickerBox, backgroundColor: hueArray[0], borderWidth: 5, height: 50, width: 50} : {...styles.huePickerBox, backgroundColor: hueArray[0]}}
+                    onPress = {() => {setColorChosen(hueArray[0])}}
+                    />
+                <Pressable
+                    style = {(colorChosen === hueArray[1]) ? {...styles.huePickerBox, backgroundColor: hueArray[1], borderWidth: 5, height: 50, width: 50} : {...styles.huePickerBox, backgroundColor: hueArray[1]}}
+                    onPress = {() => {setColorChosen(hueArray[1])}}
+                    />
+                <Pressable
+                    style = {(colorChosen === hueArray[2]) ? {...styles.huePickerBox, backgroundColor: hueArray[2], borderWidth: 5, height: 50, width: 50} : {...styles.huePickerBox, backgroundColor: hueArray[2]}}
+                    onPress = {() => {setColorChosen(hueArray[2])}}
+                    />
+                <Pressable
+                    style = {(colorChosen === hueArray[3]) ? {...styles.huePickerBox, backgroundColor: hueArray[3], borderWidth: 5, height: 50, width: 50} : {...styles.huePickerBox, backgroundColor: hueArray[3]}}
+                    onPress = {() => {setColorChosen(hueArray[3])}}
+                    />
+
+            </View>
            <Button title = "set timer" onPress={()=>onTimerSubmit()}/>
            <Button title = "Close" onPress ={() => setModalVisible(false)}/>
         </View>
@@ -226,7 +225,7 @@ const styles = StyleSheet.create({
     },
     colorPicker: {
        // backgroundColor: 'red',
-       marginTop: 50,
+       marginTop: 25,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -243,6 +242,7 @@ const styles = StyleSheet.create({
         height: 30,
         marginLeft: 15,
         marginRight: 15,
+        borderRadius: 50
     },
     labels: {
         fontSize: 15,
@@ -253,11 +253,14 @@ const styles = StyleSheet.create({
         width: 200,
         alignItems: 'flex-end',
         paddingBottom: 30,
-        marginBottom: 20
+        marginBottom: 20,
+
     },
     secondaryHuePicker: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 30,
+        marginBottom: 15
     }
 });
 
