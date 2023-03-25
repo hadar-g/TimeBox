@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
         height: 110,
         alignItems: 'center',
         marginBottom:0.1,
+        padding: 5,
     },
 
     startStop: {

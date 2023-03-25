@@ -153,11 +153,11 @@ const styles = StyleSheet.create({
         height: '10%',
     },
     addStopwatchButton: {
-        // backgroundColor: 'red',
+       // backgroundColor: 'red',
          width: 200,
          alignItems: 'flex-end',
          paddingBottom: 30,
-         marginBottom: 20,
+         marginBottom: 25,
  
      },
      modal: {

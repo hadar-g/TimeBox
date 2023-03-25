@@ -61,15 +61,18 @@ const removeStopwatch = (index) => {
 
 const styles = StyleSheet.create({
     stopwatchScreen: {
-        flex: 1,
-        backgroundColor: 'white'
+        flexDirection: 'column',
+        justifyContent: 'top',
+        paddingTop: 20,
+      //  alignItems: 'flex-start',
+        elevation: 1
     },
     welcome: {
         fontSize: 29,
         padding: 10,
         fontWeight: 'bold',
         fontFamily: "Helvetica Neue",
-       // marginTop: -20,
+      //  marginTop: -20,
         marginBottom: 30
       },
 });

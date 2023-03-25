@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
    //flex: 1,
     flexDirection: 'column',
     justifyContent: 'top',
-    paddingTop: 40,
+    paddingTop: 20,
     alignItems: 'flex-start',
     elevation: 1
   },
@@ -90,25 +90,25 @@ const styles = StyleSheet.create({
     padding: 10,
     fontWeight: 'bold',
     fontFamily: "Helvetica Neue",
-    marginTop: -20,
+  //  marginTop: -20,
     marginBottom: 30
   },
   scroll: {
     width: '100%'
   },
-  darkModeButton: {
-    height: 40,
-    width: 40,
-   // backgroundColor: 'black'
-  },
-  darkModeContainer: {
-    //backgroundColor: '',
-    width: '100%',
-    height : 40,
-    alignItems: 'flex-end',
-    paddingRight: 10,
-    zIndex: 2,
-    elevation: 2
-    //position: 'absolute'
-  }
+  // darkModeButton: {
+  //   height: 40,
+  //   width: 40,
+  //  // backgroundColor: 'black'
+  // },
+  // darkModeContainer: {
+  //   //backgroundColor: '',
+  //   width: '100%',
+  //   height : 40,
+  //   alignItems: 'flex-end',
+  //   paddingRight: 10,
+  //   zIndex: 2,
+  //   elevation: 2
+  //   //position: 'absolute'
+  // }
 });
