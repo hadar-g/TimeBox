@@ -37,7 +37,7 @@ const removeStopwatch = (index) => {
     <Text style={props.isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>My StopWatches</Text>
     <StopwatchInput 
         onAddStopwatch = {addStopwatch}/>
-        <ScrollView>
+        <ScrollView style = {styles.scroll}>
 
         {stopwatchArray.map(stopwatch => {
             return(
@@ -74,5 +74,10 @@ const styles = StyleSheet.create({
         fontFamily: "Helvetica Neue",
       //  marginTop: -20,
         marginBottom: 30
+      },
+      scroll: {
+        width: '100%',
+        marginBottom: 280,
+       marginTop: -6
       },
 });
