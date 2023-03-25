@@ -38,23 +38,23 @@ useEffect(() => {
             if (isRunning) {
                 if (secs != '00') {
                     setSecs(secs => (secs - 1).toString().padStart(2, '0'))
-                    console.log('increment seconds: ', secs)
+                   // console.log('increment seconds: ', secs)
                 }
                 if (secs == '00' && mins !== '00') {
                     setSecs('59')
                     setMins(mins => (mins - 1).toString().padStart(2, '0'))
-                    console.log("increment mins")
+                 //   console.log("increment mins")
                 }
                 if (secs == '00' && mins <= '00' && hours != '00') {
                     setSecs('59')
                     setMins('59')
                     setHours(hours => (hours - 1).toString().padStart(2, '0'))
-                    console.log("increment hours")
+                  //  console.log("increment hours")
                 }
                 if (secs == '00' && mins == '00' && hours == '00') {
                     setTimerDone(true)
                     setIsRunning(false)
-                    console.log("timer is over")
+                   // console.log("timer is over")
                 }
             }
         }, 1000)
