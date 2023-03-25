@@ -6,15 +6,11 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 const colorValues = require('./Constants/ColorVals.json')
 
-const TimerInput = (props) => {
-    
-    const[secondsInput, setSecondsInput] = useState('0')
-    const[minsInput, setMinsInput] = useState('0');
-    const[hoursInput, setHoursInput] = useState('0');
-    const[timerNameInput, setTimerNameInput] = useState('')
+const StopwatchInput = (props) => {
     const[modalVisible, setModalVisible] = useState(false)
-    const[colorChosen, setColorChosen] = useState()
+    const[stopwatchNameInput, setStopwatchNameInput] = useState('')
     const[baseColor, setBaseColor] = useState('red')
+    const[colorChosen, setColorChosen] = useState()
     const[hueArray, setHueArray] = useState([colorValues.RedOne ,colorValues.RedTwo , colorValues.RedThree, colorValues.RedFour])
 
     const addTimerPlusSymbolWidth = 5
@@ -22,14 +18,6 @@ const TimerInput = (props) => {
     const addTimerPlusMarginLeftOffset = -1 * ((addTimerPlusSymbolHeight / 2) - (addTimerPlusSymbolWidth / 2))
     const addTimerPlusMarginTopOffset = -1 * ((addTimerPlusSymbolHeight / 2) + (addTimerPlusSymbolWidth / 2))
 
-    const createPickerArray = (max) => {
-        const pickerArray =[]
-        for(let i = 0; i <= max; i++){
-           pickerArray.push( <Picker.Item label = {`${i}`} value = {`${i}`}/> )
-        }
-        return pickerArray
-    }
-    
     useEffect(() => {
         
         switch (baseColor) {
@@ -61,92 +49,51 @@ const TimerInput = (props) => {
         
     }, [baseColor])
 
-    const onTimerSubmit = () => {0
-    
-        if(timerNameInput === ''){
-            Alert.alert("Your Timer Needs a Name")
-        }else if (secondsInput == 0 && minsInput == 0 && hoursInput == 0){
-            Alert.alert("Your Timer Needs a Duration")
+    const setStopwatch = () => {
+       
+
+        if(stopwatchNameInput === ''){
+            Alert.alert("Your Stopwatch Needs a Name")
         }else{
-
-            setModalVisible(false)
-
-            props.onAddTimer({
+            props.onAddStopwatch({
                 key: uuidv4(),
-                title: timerNameInput,
-                seconds: secondsInput, 
-                minutes: minsInput, 
-                hours: hoursInput,
-                timerColorChosen: colorChosen})
-    
-            setSecondsInput('0');
-            setMinsInput('0');
-            setHoursInput('0');
-            setTimerNameInput('');
-            setBaseColor('red')
-            setColorChosen(colorValues.RedOne)
+                name: stopwatchNameInput,
+                color: colorChosen
+            })
+
+            setStopwatchNameInput('')
+            setModalVisible(false)
         }
 
-       
+
     }
 
-
     return(
-    <View style = {styles.inputScreen}>
+        <View style = {styles.container}>
 
-            <View style = {styles.addTimerButton}>
+
+        <View style = {styles.addStopwatchButton}>
             <Pressable
                 style = {({pressed}) => [((pressed) ? { opacity: 0.4} : {} )]}
                 onPress={() => setModalVisible(true)}>
                 <View style = {{width: addTimerPlusSymbolWidth, height: addTimerPlusSymbolHeight, backgroundColor: 'rgb(255,149,0)'}}></View>
                 <View style = {{width: addTimerPlusSymbolHeight, height: addTimerPlusSymbolWidth, marginTop: addTimerPlusMarginTopOffset, marginLeft: addTimerPlusMarginLeftOffset, backgroundColor: 'rgb(255,149,0)'}}></View>
             </Pressable>
-            </View>
+        </View>
 
-            {/* <Button 
-                title ="Add Timer" 
-                onPress={() => setModalVisible(true)}/> */}
-            
         <Modal
             visible={modalVisible}
             animationType="slide"
             transparent = {true}>
-        <View style = {styles.modal}>
-        <TextInput 
-            style = {styles.timerNameInputContainer}
-            placeholder = "Timer Name"
-            value ={timerNameInput}
-            onChangeText={setTimerNameInput}
+
+           <View style = {styles.modal}>
+
+           <TextInput 
+            style = {styles.stopwatchNameInputContainer}
+            placeholder = "Stopwatch Name"
+            value ={stopwatchNameInput}
+            onChangeText={setStopwatchNameInput}
             />
-        <View
-        style = {styles.scroll}>
-        <Picker 
-        style = {styles.picker}
-            selectedValue={hoursInput}
-            onValueChange={(itemValue) =>{
-                setHoursInput(itemValue)
-            }}
-            >
-                {createPickerArray(10).map(picker => picker)}
-        </Picker>
-            <Text style = {styles.labels}>Hours</Text>
-        <Picker 
-        style = {styles.picker}
-            selectedValue={minsInput}
-            onValueChange={(itemValue) =>setMinsInput(itemValue)}
-            >
-             {createPickerArray(11).map(picker => picker)}
-            </Picker>
-            <Text style = {styles.labels}> Mins</Text>
-            <Picker 
-        style = {styles.picker}
-            selectedValue={secondsInput}
-            onValueChange={(itemValue) =>setSecondsInput(itemValue)}
-            >
-              {createPickerArray(12).map(picker => picker)}
-            </Picker>
-            <Text style = {styles.labels}>Secs</Text>
-        </View>
 
         <View style = {styles.colorPicker}>
             <Pressable 
@@ -184,34 +131,33 @@ const TimerInput = (props) => {
                     />
 
             </View>
-           <Button title = "set timer" onPress={()=>onTimerSubmit()}/>
-           <Button title = "Close" onPress ={() => setModalVisible(false)}/>
-        </View>
+
+            <Button title = "set stopwatch"
+                onPress={setStopwatch}/>
+
+            <Button title ="close"
+                onPress={() => {setModalVisible(false)}} />
+           </View>
         </Modal>
-    </View>
-    );
+        </View>
+        
+    )
 }
+
 const styles = StyleSheet.create({
-    timerNameInputContainer:{
-        //flexDirection: 'column',
-        width: '60%',
+    container: {
+      //  backgroundColor: 'red',
         height: '10%',
-        marginTop: 20,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: 'gray',
-        padding: 5,
     },
-    picker : {
-        width:'25%', 
-        margin: 3
-    },
-    scroll : {
-          flexDirection: 'row',
-          alignItems: 'center',
-           marginLeft: -25,
-    },
-    modal: {
+    addStopwatchButton: {
+        // backgroundColor: 'red',
+         width: 200,
+         alignItems: 'flex-end',
+         paddingBottom: 30,
+         marginBottom: 20,
+ 
+     },
+     modal: {
         borderWidth: 2,
         borderRadius: 20,
         margin: '3%',
@@ -220,39 +166,37 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
+        height: 350,
+    },
+    stopwatchNameInputContainer:{
+        width: '60%',
+        height: '15%',
+      //  marginTop: 2,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: 'gray',
+        padding: 5,
     },
     colorPicker: {
-       // backgroundColor: 'red',
-       marginTop: 25,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    colorPickBox: {
-        width: 30,
-        height: 30,
-        marginLeft: 15,
-        marginRight: 15,
-        marginTop: -20
-        
-    },
-    huePickerBox:{
+        // backgroundColor: 'red',
+        marginTop: 30,
+         flexDirection: 'row',
+         alignItems: 'center'
+     },
+     colorPickBox: {
+         width: 30,
+         height: 30,
+         marginLeft: 15,
+         marginRight: 15,
+        // marginTop: -20
+         
+     },
+     huePickerBox:{
         width: 30,
         height: 30,
         marginLeft: 15,
         marginRight: 15,
         borderRadius: 50
-    },
-    labels: {
-        fontSize: 15,
-        margin: -10
-    },
-    addTimerButton: {
-       // backgroundColor: 'red',
-        width: 200,
-        alignItems: 'flex-end',
-        paddingBottom: 30,
-        marginBottom: 20,
-
     },
     secondaryHuePicker: {
         flexDirection: 'row',
@@ -260,6 +204,8 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 15
     }
-});
 
-export default TimerInput
+
+})
+
+export default StopwatchInput

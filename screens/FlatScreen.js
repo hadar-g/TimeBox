@@ -8,12 +8,12 @@ const allColorTest = require('../components/Constants/AllColorTest')
 const defaultTimer = require('../components/Constants/DefaultTimer')
 
 
-export default function FlatScreen() {
+export default function FlatScreen(props) {
 
  // const[timersArray, setTimersArray] = useState(defaultTimer)
    const[timersArray, setTimersArray] = useState(allColorTest)
   const[index, setIndex] = useState(0)
-  const[isDarkMode, setIsDarkMode] = useState(false)
+  //const[isDarkMode, setIsDarkMode] = useState(false)
 
   const addTimer = (timerObject) => {
    setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
@@ -31,17 +31,17 @@ export default function FlatScreen() {
 
   return (
    
-      <View style={isDarkMode ? {...styles.container, backgroundColor: 'black'}: styles.container}>
-      <View style = {styles.darkModeContainer}>
+      <View style={props.isDarkMode ? {...styles.container, backgroundColor: 'black'}: styles.container}>
+      {/* <View style = {styles.darkModeContainer}>
         <Pressable style = {styles.darkModeButton}
                     onPress = {() => {setIsDarkMode(!isDarkMode)}} >
         <Image 
         style = {{height: 30, width: 30}}
         source = {isDarkMode ? require('../Images/moon-line-icon.jpg') : require('../Images/moon-icon.png')}/>
         </Pressable>
-      </View>
+      </View> */}
 
-      <Text style={isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>My Timers</Text>
+      <Text style={props.isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>My Timers</Text>
 
       <TimerInput onAddTimer = {addTimer} />
 
@@ -57,7 +57,7 @@ export default function FlatScreen() {
             title = {timerObject.title}
             timerColorChosen = {timerObject.timerColorChosen}
             onRemoveTimer = {() => {removeTimer(timerObject.index)}}
-            isDarkMode = {isDarkMode}
+            isDarkMode = {props.isDarkMode}
           />
     
 
@@ -77,7 +77,7 @@ export default function FlatScreen() {
 
 const styles = StyleSheet.create({
   container: {
-   flex: 1,
+   //flex: 1,
     flexDirection: 'column',
     justifyContent: 'top',
     paddingTop: 40,
