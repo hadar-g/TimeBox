@@ -63,6 +63,8 @@ const StopwatchInput = (props) => {
 
             setStopwatchNameInput('')
             setModalVisible(false)
+            setBaseColor('red')
+            setColorChosen()
         }
 
 
@@ -93,6 +95,7 @@ const StopwatchInput = (props) => {
             placeholder = "Stopwatch Name"
             value ={stopwatchNameInput}
             onChangeText={setStopwatchNameInput}
+            maxLength={16}
             />
 
         <View style = {styles.colorPicker}>

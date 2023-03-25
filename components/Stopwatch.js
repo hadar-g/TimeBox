@@ -5,49 +5,21 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
-const FlatTimer = (props) => {
+const Stopwatch= (props) => {
 
-const [secs, setSecs] = useState(props.s);
-const [mins, setMins] = useState(props.m);
-const[hours, setHours] = useState(props.h);
+const [secs, setSecs] = useState(0);
+const [mins, setMins] = useState(0);
+const[hours, setHours] = useState(0);
 const [isRunning, setIsRunning] = useState(false)
-const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 const [opacityVal, setOpacityVal] = useState(0.3)
 
-
-const originalSeconds = props.s
-const orignalMinutes = props.m
-const originalHours = props.h
 
 useEffect(() => {
     {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.3)}
     const myAdjustedColor = `rgba${props.timerColorChosen.substr(3, props.timerColorChosen.length-4)}, ${opacityVal})`
     setTimerBackgroundColor(myAdjustedColor)
-    //setTimerBackgroundColor(props.timerColorChosen)
-//     {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.2) }
-//     switch (props.timerColorChosen) {
-//     case 'red':
-//         setTimerBackgroundColor(`rgba(255, 0, 0, ${opacityVal})`);
-//       break;
-//     case 'green':
-//         setTimerBackgroundColor(`rgba(0,200,0, ${opacityVal})`);
-//       break;
-//     case 'blue':
-//         setTimerBackgroundColor(`rgba(0, 0, 255, ${opacityVal})`);
-//       break;
-//     case 'orange':
-//         setTimerBackgroundColor(`rgba(255, 165, 0, ${opacityVal})`);
-//       break;
-//     case 'gray':
-//         setTimerBackgroundColor(`rgba(100,100,100, ${opacityVal})`);
-//       break;
-//     default:
-//       setBackgroundColor('');
-//       break;
-//   }
 }, [props.isDarkMode, opacityVal])
-
 
 
 
@@ -58,26 +30,26 @@ useEffect(() => {
 
         const timer = setTimeout(() => {
             if (isRunning) {
-                if (secs != '00') {
-                    setSecs(secs => (secs - 1).toString().padStart(2, '0'))
+                if (secs != '59') {
+                    setSecs(secs => (parseInt(secs) + 1).toString().padStart(2, '0'))
                     console.log('increment seconds: ', secs)
                 }
-                if (secs == '00' && mins !== '00') {
-                    setSecs('59')
-                    setMins(mins => (mins - 1).toString().padStart(2, '0'))
+                if (secs == '59' && mins !== '59') {
+                    setSecs('00')
+                    setMins(mins => (parseInt(mins) + 1).toString().padStart(2, '0'))
                     console.log("increment mins")
                 }
-                if (secs == '00' && mins <= '00' && hours != '00') {
-                    setSecs('59')
-                    setMins('59')
-                    setHours(hours => (hours - 1).toString().padStart(2, '0'))
+                if (secs == '59' && mins == '59' && hours != '59') {
+                    setSecs('00')
+                    setMins('00')
+                    setHours(hours => (parseInt(hours) + 1).toString().padStart(2, '0'))
                     console.log("increment hours")
                 }
-                if (secs == '00' && mins == '00' && hours == '00') {
-                    setTimerDone(true)
-                    setIsRunning(false)
-                    console.log("timer is over")
-                }
+                // if (secs == '00' && mins == '00' && hours == '00') {
+                //     setTimerDone(true)
+                //     setIsRunning(false)
+                //     console.log("timer is over")
+                // }
             }
         }, 1000)
         return () => clearTimeout(timer)
@@ -86,12 +58,10 @@ useEffect(() => {
 
 
 const resetTimer = () => {
-
-            setTimerDone(false)
             setIsRunning(false)
-            setSecs(originalSeconds)
-            setMins(orignalMinutes)
-            setHours(originalHours)
+            setSecs(0)
+            setMins(0)
+            setHours(0)
 }
 
 const onRenderLeftAction = () => {
@@ -124,10 +94,10 @@ const onRenderLeftAction = () => {
           renderLeftActions = {onRenderLeftAction}
           renderRightActions = {onRenderRightActions} >
         <View style = {props.isDarkMode ?   {backgroundColor: 'black'} :{backgroundColor: 'white'}}> 
-        <View style = {!timerDone ?{...styles.container, backgroundColor: timerBackgroundColor} : {...styles.container, backgroundColor: 'red'} }>
+        <View style = {{...styles.container, backgroundColor: timerBackgroundColor }  }>
           
             <View style = {styles.texts}>
-                <Text style = {props.isDarkMode ? {...styles.title, color: 'white'}: styles.title}>{props.title}</Text>
+                <Text style = {props.isDarkMode ? {...styles.title, color: 'white'}: styles.title}>{props.name}</Text>
                 <Text style = {props.isDarkMode ? {...styles.clock, color: 'white'}:styles.clock}> {hours} : {mins} : {secs} </Text>
             </View>
             <Pressable 
@@ -147,6 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontFamily: 'Helvetica Neue',
         // color: 'white'
+        width: 300
     },
     clock: {
       paddingTop: 10,
@@ -161,10 +132,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 110,
         alignItems: 'center',
-    //    borderTopWidth: 5,
-    //    borderBottomWidth: 5,
-        padding: 5,
-     //   backgroundColor: 'white',
         marginBottom:0.1,
     },
 
@@ -175,8 +142,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginLeft: '2%',
-        marginTop: 5
+        marginTop: 5,
+        marginLeft: -45
     }, 
     buttonText: {
         fontSize: 19,
@@ -206,4 +173,4 @@ const styles = StyleSheet.create({
     
 });
 
-export default FlatTimer
+export default Stopwatch
