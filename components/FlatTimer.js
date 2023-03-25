@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image} from 'react-native';
+import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image, Alert} from 'react-native';
 import { useState, useEffect, React, Component, forwardRef, useImperativeHandle, useRef} from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+//import Sound from "react-native-sound";
 
 
 const FlatTimer = (props) => {
@@ -14,11 +15,17 @@ const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 const [opacityVal, setOpacityVal] = useState(0.3)
+// const [alarm, setAlarm] = useState(new Sound('../Sounds/Alarm1.mp3', Sound.MAIN_BUNDLE, (error) => {
+//     if (error) {
+//       console.log('Failed to load the sound', error);
+//     }
+//   }));
 
 
 const originalSeconds = props.s
 const orignalMinutes = props.m
 const originalHours = props.h
+
 
 useEffect(() => {
     {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.3)}
@@ -54,7 +61,12 @@ useEffect(() => {
                 if (secs == '00' && mins == '00' && hours == '00') {
                     setTimerDone(true)
                     setIsRunning(false)
-                   // console.log("timer is over")
+                    Alert.alert(`${props.title} is Over`, "this timer has elapsed you can remove or reset it", [
+                        {text: "Remove",
+                        onPress: () => {props.onRemoveTimer()}},
+                        {text: "Reset",
+                        onPress: () => {resetTimer()}}
+                    ])
                 }
             }
         }, 1000)
