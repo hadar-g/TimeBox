@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
     marginBottom: 30
   },
   scroll: {
-    width: '100%'
+    width: '100%',
+    marginBottom: 280
   },
   // darkModeButton: {
   //   height: 40,

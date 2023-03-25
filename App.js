@@ -19,10 +19,18 @@ export default function App() {
         <View style = {styles.toggles}>
           <Pressable 
             style = {showTimers ?styles.toggleButtons : {...styles.toggleButtons, backgroundColor: 'rgb(255,149,0)'}}
-            onPress={() => setShowTimers(false)}/>
+            onPress={() => setShowTimers(false)}>
+              <Image 
+                style = {{height: 30, width: 30, marginRight: 7}}
+                source = {require('./Images/stopwatch.png')} />
+            </Pressable>
           <Pressable  
             style = {showTimers ?{...styles.toggleButtons, backgroundColor: 'rgb(255,149,0)'} : styles.toggleButtons}
-            onPress={() => setShowTimers(true)}/>
+            onPress={() => setShowTimers(true)}>
+              <Image 
+                style = {{height: 30, width: 30}}
+                source = {require('./Images/sand-clock.png')} />
+          </Pressable>
 
         </View>
 
@@ -30,7 +38,7 @@ export default function App() {
         <Pressable style = {styles.darkModeButton}
                     onPress = {() => {setIsDarkMode(!isDarkMode)}} >
         <Image 
-        style = {{height: 30, width: 30}}
+        style = {{height: 40, width: 40}}
         source = {isDarkMode ? require('./Images/crescent-moon.png') : require('./Images/moon-icon.png')}/>
         </Pressable>
       </View>
@@ -71,13 +79,15 @@ const styles = StyleSheet.create({
  // justifyContent: 'space-between'
  },
  toggleButtons: {
-   width: 40, 
-   height: 40, 
+   width: 50, 
+   height: 50, 
    borderRadius: 30,
    borderColor: 'black',
    borderWidth: 3,
    marginLeft: 20,
-   backgroundColor: 'white'
+   backgroundColor: 'white',
+   justifyContent: 'center',
+   alignItems: 'center'
  },
 
  darkModeContainer: {
