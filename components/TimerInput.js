@@ -117,6 +117,7 @@ const TimerInput = (props) => {
             placeholder = "Timer Name"
             value ={timerNameInput}
             onChangeText={setTimerNameInput}
+            maxLength={16}
             />
         <View
         style = {styles.scroll}>
