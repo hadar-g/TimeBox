@@ -3,7 +3,10 @@ import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image,
 import { useState, useEffect, React, Component, forwardRef, useImperativeHandle, useRef} from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+ import { Audio } from 'expo-av';
 //import Sound from "react-native-sound";
+// import useSound from 'use-sound';
+// import alarmFile from '../Sounds/Alarm1.mp3';
 
 
 const FlatTimer = (props) => {
@@ -15,12 +18,24 @@ const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 const [opacityVal, setOpacityVal] = useState(0.3)
-// const [alarm, setAlarm] = useState(new Sound('../Sounds/Alarm1.mp3', Sound.MAIN_BUNDLE, (error) => {
-//     if (error) {
-//       console.log('Failed to load the sound', error);
-//     }
-//   }));
+const [sound, setSound] = useState();
 
+
+const playSound = async () => {
+   // await sound.loadAsync();
+    setSound(sound)
+    await sound.playAsync();
+    sound.setOnPlaybackStatusUpdate(status => {
+        console.log(status)
+      });
+    console.log('play sound end')
+}
+
+const loadSound = async () => {
+    console.log("loading sound")
+    const { sound } =  await Audio.Sound.createAsync( require('../Sounds/Alarm.mp3'))
+    setSound(sound)
+}
 
 const originalSeconds = props.s
 const orignalMinutes = props.m
@@ -34,9 +49,21 @@ useEffect(() => {
 }, [props.isDarkMode, opacityVal])
 
 
+useEffect(() => {
+
+   
+    if(timerDone){
+      
+       
+ 
+ 
+    }
+   
+}, [timerDone])
 
 
 useEffect(() => {
+    loadSound()
     setSecs(secs => secs.toString().padStart(2, '0'))
     setMins(mins => mins.toString().padStart(2, '0'))
     setHours(hours => hours.toString().padStart(2, '0'))
@@ -59,14 +86,25 @@ useEffect(() => {
                   //  console.log("increment hours")
                 }
                 if (secs == '00' && mins == '00' && hours == '00') {
+                  //  play()
                     setTimerDone(true)
                     setIsRunning(false)
                     Alert.alert(`${props.title} is Over`, "this timer has elapsed you can remove or reset it", [
                         {text: "Remove",
-                        onPress: () => {props.onRemoveTimer()}},
+                        onPress: () => {
+                            sound.stopAsync()
+                            props.onRemoveTimer()
+
+                        }},
                         {text: "Reset",
-                        onPress: () => {resetTimer()}}
+                        onPress: () => {
+                            sound.stopAsync()
+                            resetTimer()
+                            
+                        }}
+                        
                     ])
+                    playSound()
                 }
             }
         }, 1000)

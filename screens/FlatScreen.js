@@ -10,10 +10,10 @@ const defaultTimer = require('../components/Constants/DefaultTimer')
 
 export default function FlatScreen(props) {
 
- // const[timersArray, setTimersArray] = useState(defaultTimer)
-//  const[index, setIndex] = useState(1)
-   const[timersArray, setTimersArray] = useState(allColorTestTimers)
-  const[index, setIndex] = useState(20)
+ const[timersArray, setTimersArray] = useState(defaultTimer)
+ const[index, setIndex] = useState(1)
+  //  const[timersArray, setTimersArray] = useState(allColorTestTimers)
+  // const[index, setIndex] = useState(20)
 
 
   const addTimer = (timerObject) => {
