@@ -59,6 +59,7 @@ export default function FlatScreen(props) {
             timerColorChosen = {timerObject.timerColorChosen}
             onRemoveTimer = {() => {removeTimer(timerObject.index)}}
             isDarkMode = {props.isDarkMode}
+            soundChosen = {timerObject.soundChosen}
           />
     
 

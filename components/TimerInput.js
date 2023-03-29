@@ -1,10 +1,13 @@
 
-import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable, Alert} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Keyboard, Modal, Pressable, Alert, Image} from 'react-native';
 import { useState, React, useEffect} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 const colorValues = require('./Constants/ColorVals.json')
+import { Audio } from 'expo-av';
+
+
 
 const TimerInput = (props) => {
     
@@ -15,7 +18,13 @@ const TimerInput = (props) => {
     const[modalVisible, setModalVisible] = useState(false)
     const[colorChosen, setColorChosen] = useState()
     const[baseColor, setBaseColor] = useState('red')
+    const[soundPicked, setSoundPicked] = useState(0)
     const[hueArray, setHueArray] = useState([colorValues.RedOne ,colorValues.RedTwo , colorValues.RedThree, colorValues.RedFour])
+    // // const[alarmSound, setAlarmSound] = useState()
+    // // const[rockSound, setRockSound] = useState()
+    // const [soundFile, setSoundFile] = useState()
+    // const [sound, setSound] = useState()
+    // //const[clockSound, setClockSound] = useState()
 
     const addTimerPlusSymbolWidth = 5
     const addTimerPlusSymbolHeight = 40
@@ -29,9 +38,44 @@ const TimerInput = (props) => {
         }
         return pickerArray
     }
+
+    // const playSound = async () => {
+    //    // setSound(sound)
+
+    //    await sound.playAsync();
+    // }
+    
+    const loadSound = async (soundFile) => {
+        console.log("loading sound Input")
+        const { sound } =  await Audio.Sound.createAsync( soundFile )
+        setSound(sound)
+        console.log('loaded sound')
+        await sound.playAsync();
+        console.log('playing sound input')
+     sound.setOnPlaybackStatusUpdate((status) => {
+        console.log(status)
+        if (!status.didJustFinish) return;
+        sound.unloadAsync();
+        console.log('sound unloaded after okay')
+    });
+        // await sound.unloadAsync()
+        // console.log('unloading sound input')
+       // console.log(sound)
+       
+      //  return sound
+    }
+
+    // const stopSound = async () => {
+    //     console.log('sounds unloading')
+    //    await alarmSound.unloadAsync()
+    //    await rockSound.unloadAsync()
+    //    console.log('sounds unloaded')
+    // }
+
     
     useEffect(() => {
-        
+      //  setAlarmSound(loadSound('../Sounds/Alarm.mp3'))
+
         switch (baseColor) {
             case 'red':
                 setHueArray([colorValues.RedOne ,colorValues.RedTwo , colorValues.RedThree, colorValues.RedFour]);
@@ -77,7 +121,8 @@ const TimerInput = (props) => {
                 seconds: secondsInput, 
                 minutes: minsInput, 
                 hours: hoursInput,
-                timerColorChosen: colorChosen})
+                timerColorChosen: colorChosen,
+                soundChosen: soundPicked})
     
             setSecondsInput('0');
             setMinsInput('0');
@@ -85,6 +130,7 @@ const TimerInput = (props) => {
             setTimerNameInput('');
             setBaseColor('red')
             setColorChosen(colorValues.RedOne)
+
         }
 
        
@@ -148,6 +194,44 @@ const TimerInput = (props) => {
             </Picker>
             <Text style = {styles.labels}>Secs</Text>
         </View>
+        <View style = {styles.sounds}>
+            
+            <Pressable 
+                style = {soundPicked == 0 ? {...styles.soundPickerBox, height: 55, width: 55}: styles.soundPickerBox}
+                onPress={() => {setSoundPicked(0)}}>
+                <Image 
+                style = {soundPicked == 0 ? {height: 30, width: 30}: {height: 20, width: 20}}
+                source = {require('../Images/close.png')}/>
+            </Pressable>
+            <Pressable 
+                style = {soundPicked == 1 ? {...styles.soundPickerBox, height: 55, width: 55}: styles.soundPickerBox}
+                onPress={() => {
+                    //console.log(alarmSound)
+                    loadSound(require('../Sounds/Alarm-trimmed.mp3'))
+                    setSoundPicked(1)}}>
+                <Image 
+                style = {soundPicked == 1 ? {height: 30, width: 30}: {height: 20, width: 20}}
+                source = {require('../Images/sound.png')}/>
+            </Pressable>
+            <Pressable 
+                style = {soundPicked == 2 ? {...styles.soundPickerBox, height: 55, width: 55}: styles.soundPickerBox}
+                onPress={() => {
+                    loadSound(require('../Sounds/mechanical-clock-trimmed.mp3'))
+                    setSoundPicked(2)}}>
+                <Image 
+                style = {soundPicked == 2 ? {height: 30, width: 30}: {height: 20, width: 20}}
+                source = {require('../Images/clock.png')}/>
+            </Pressable>
+            <Pressable 
+                style = {soundPicked == 3 ? {...styles.soundPickerBox, height: 55, width: 55}: styles.soundPickerBox}
+                onPress={() => {
+                    loadSound(require('../Sounds/rock_alarm-trimmed.mp3'))
+                    setSoundPicked(3)}}>
+                <Image 
+                style = {soundPicked == 3 ? {height: 30, width: 30}: {height: 20, width: 20}}
+                source = {require('../Images/electric-guitar.png')}/>
+            </Pressable>
+        </View>
 
         <View style = {styles.colorPicker}>
             <Pressable 
@@ -186,7 +270,7 @@ const TimerInput = (props) => {
 
             </View>
            <Button title = "set timer" onPress={()=>onTimerSubmit()}/>
-           <Button title = "Close" onPress ={() => setModalVisible(false)}/>
+           <Button title = "Close" onPress ={() => {setModalVisible(false)}}/>
         </View>
         </Modal>
     </View>
@@ -202,6 +286,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'gray',
         padding: 5,
+        backgroundColor: 'white',
+        zIndex: 1
     },
     picker : {
         width:'25%', 
@@ -211,6 +297,30 @@ const styles = StyleSheet.create({
           flexDirection: 'row',
           alignItems: 'center',
            marginLeft: -25,
+           height: 150,
+           marginBottom: 10,
+           marginTop: -15
+    },
+    sounds: {
+        height: 70,
+        width: '85%',
+      //  backgroundColor: 'yellow',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10
+        // marginLeft: 50,
+        // marginRight: 50
+    },
+    soundPickerBox: {
+        height: 40, 
+        width: 40, 
+        borderRadius: 30,
+       // backgroundColor: 'red',
+        borderWidth: 4,
+        borderColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     modal: {
         borderWidth: 2,

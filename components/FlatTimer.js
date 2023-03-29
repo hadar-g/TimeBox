@@ -19,23 +19,54 @@ const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 const [opacityVal, setOpacityVal] = useState(0.3)
 const [sound, setSound] = useState();
+const[soundFile, setSoundFile] = useState('')
+const[imageFile, setImageFile] = useState('')
 
-
-const playSound = async () => {
-   // await sound.loadAsync();
+const loadSound = async (soundFile) => {
+    console.log("loading sound Input")
+    const { sound } =  await Audio.Sound.createAsync( soundFile )
     setSound(sound)
+    console.log('loaded sound')
     await sound.playAsync();
-    sound.setOnPlaybackStatusUpdate(status => {
-        console.log(status)
-      });
-    console.log('play sound end')
+    console.log('playing sound input')
+ sound.setOnPlaybackStatusUpdate((status) => {
+    console.log(status)
+    if (!status.didJustFinish) return;
+    sound.unloadAsync();
+    console.log('sound unloaded after okay')
+});
 }
 
-const loadSound = async () => {
-    console.log("loading sound")
-    const { sound } =  await Audio.Sound.createAsync( require('../Sounds/Alarm.mp3'))
-    setSound(sound)
-}
+
+// const playSound = async () => {
+//    // await sound.loadAsync();
+//     //setSound(sound)
+//     await sound.playAsync();
+//     // sound.setOnPlaybackStatusUpdate((status) => {
+//     //     console.log(status)
+//     //     if (!status.didJustFinish) return;
+//     //     sound.unloadAsync();
+//     //     console.log('sound unloaded after okay')
+//     // });
+//     // sound.setOnPlaybackStatusUpdate(status => {
+//     //     console.log(status)
+//     //   });
+//     // console.log('play sound end')
+// }
+
+// const loadSound = async () => {
+//     console.log("loading sound Timer")
+//     const { sound } =  await Audio.Sound.createAsync( require('../Sounds/Alarm.mp3'))
+//     setSound(sound)
+//     //console.log(sound)
+//   //r  console.log(sound)
+// }
+
+// const stopPlaying = async() => {
+//     await sound.stopAsync()
+//     await sound.unloadAsync()
+//     console.log('sound unloaded after stop')
+// }
 
 const originalSeconds = props.s
 const orignalMinutes = props.m
@@ -49,26 +80,36 @@ useEffect(() => {
 }, [props.isDarkMode, opacityVal])
 
 
+ useEffect(() => {
+    switch (props.soundChosen) {
+        case 0:
+            setImageFile('../Images/close.png')
+          break;
+        case 1 :
+            setSoundFile('../Sounds/Alarm.mp3')
+            setImageFile('../Images/sound.png')
+          break;
+        case 2: 
+            setSoundFile('../Sounds/mechanical-clock.mp3')
+            setImageFile('../Images/clock.png')
+          break;
+        case 3:
+            setSoundFile('../Sounds/rock_alarm.mp3')
+            setImageFile('../Images/electric-guitar.png')
+          break;
+        default:
+          break;
+      }
+ }, [])
+
+
 useEffect(() => {
-
-   
-    if(timerDone){
-      
-       
- 
- 
-    }
-   
-}, [timerDone])
-
-
-useEffect(() => {
-    loadSound()
+    
     setSecs(secs => secs.toString().padStart(2, '0'))
     setMins(mins => mins.toString().padStart(2, '0'))
     setHours(hours => hours.toString().padStart(2, '0'))
 
-        const timer = setTimeout(() => {
+        const timer = setTimeout( () => {
             if (isRunning) {
                 if (secs != '00') {
                     setSecs(secs => (secs - 1).toString().padStart(2, '0'))
@@ -92,19 +133,20 @@ useEffect(() => {
                     Alert.alert(`${props.title} is Over`, "this timer has elapsed you can remove or reset it", [
                         {text: "Remove",
                         onPress: () => {
-                            sound.stopAsync()
+                           // stopPlaying()
                             props.onRemoveTimer()
 
                         }},
                         {text: "Reset",
                         onPress: () => {
-                            sound.stopAsync()
+                            //sound.stopAsync()
                             resetTimer()
                             
                         }}
                         
                     ])
-                    playSound()
+                   
+                    loadSound(require('../Sounds/Alarm.mp3'))
                 }
             }
         }, 1000)
@@ -158,6 +200,8 @@ const onRenderLeftAction = () => {
                 <Text style = {props.isDarkMode ? {...styles.title, color: 'white'}: styles.title}>{props.title}</Text>
                 <Text style = {props.isDarkMode ? {...styles.clock, color: 'white'}:styles.clock}> {hours} : {mins} : {secs} </Text>
             </View>
+            {/* <Image style={{height: 20, widht: 20}} source = {require('../Images/sound.png')} /> */}
+            {/* <Text>{props.soundChosen}</Text> */}
             <Pressable 
                 style = {({pressed}) => [isRunning ? ((pressed) ? {...styles.startStop, backgroundColor: 'red', opacity: 0.4} : {...styles.startStop, backgroundColor: 'red'} ): ((pressed) ? {...styles.startStop, backgroundColor: 'green', opacity: 0.4} : {...styles.startStop, backgroundColor: 'green'})]}
                 onPress = {() => {setIsRunning(!isRunning)}}>
