@@ -48,7 +48,7 @@ const TimerInput = (props) => {
     const loadSound = async (soundFile) => {
         console.log("loading sound Input")
         const { sound } =  await Audio.Sound.createAsync( soundFile )
-        setSound(sound)
+       // setSound(sound)
         console.log('loaded sound')
         await sound.playAsync();
         console.log('playing sound input')
@@ -130,6 +130,7 @@ const TimerInput = (props) => {
             setTimerNameInput('');
             setBaseColor('red')
             setColorChosen(colorValues.RedOne)
+            setSoundPicked(0)
 
         }
 

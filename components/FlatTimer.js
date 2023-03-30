@@ -18,25 +18,67 @@ const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 const [opacityVal, setOpacityVal] = useState(0.3)
-const [sound, setSound] = useState();
+
 const[soundFile, setSoundFile] = useState('')
-const[imageFile, setImageFile] = useState('')
+const[imageFile, setImageFile] = useState(require('../Images/close.png'))
+const [sound, setSound] = useState(new Audio.Sound);
+const soundOff = useRef(false)
 
 const loadSound = async (soundFile) => {
     console.log("loading sound Input")
     const { sound } =  await Audio.Sound.createAsync( soundFile )
-    setSound(sound)
+    await setSound(sound)
     console.log('loaded sound')
     await sound.playAsync();
     console.log('playing sound input')
- sound.setOnPlaybackStatusUpdate((status) => {
-    console.log(status)
-    if (!status.didJustFinish) return;
-    sound.unloadAsync();
-    console.log('sound unloaded after okay')
-});
-}
+    
+  sound.setOnPlaybackStatusUpdate((status) => {
+   console.log(status.isPlaying)
 
+   //ßconsole.log(soundOff)
+   if(soundOff.current == true){
+    sound.stopAsync()
+    //rsound.unloadAsync()
+    return
+}
+   if (!status.didJustFinish) return;
+       sound.unloadAsync();
+        console.log('sound unloaded after okay')
+   
+})
+
+    // while(sound.setOnPlaybackStatusUpdate.isP){
+    //     console.log("IN WHILE")
+    //     console.log(sound.setOnPlaybackStatusUpdate.isPlaying)
+    //     if(soundOff.current == true){
+    //         sound.stopAsync()
+    //         //rsound.unloadAsync()
+    //         return
+    //     }
+    // }
+ //   console.log("after while")
+//   sound.setOnPlaybackStatusUpdate((status) => {
+//    console.log(status)
+//    //ßconsole.log(soundOff)
+//    if(soundOff.current == true){
+//     sound.stopAsync()
+//     //rsound.unloadAsync()
+//     return
+// }
+//    if (!status.didJustFinish) return;
+//        sound.unloadAsync();
+//         console.log('sound unloaded after okay')
+   
+// })
+
+}
+// const cancelSound =() => {
+//     console.log('stoppong one')
+//     console.log(sound)
+//    sound.stopAsync()
+//     sound.unloadAsync()
+//     console.log('stopping play and unloading')
+// }
 
 // const playSound = async () => {
 //    // await sound.loadAsync();
@@ -83,21 +125,22 @@ useEffect(() => {
  useEffect(() => {
     switch (props.soundChosen) {
         case 0:
-            setImageFile('../Images/close.png')
+            setImageFile(require('../Images/close.png'))
           break;
         case 1 :
-            setSoundFile('../Sounds/Alarm.mp3')
-            setImageFile('../Images/sound.png')
+            setSoundFile(require('../Sounds/Alarm.mp3'))
+            setImageFile(require('../Images/sound.png'))
           break;
         case 2: 
-            setSoundFile('../Sounds/mechanical-clock.mp3')
-            setImageFile('../Images/clock.png')
+            setSoundFile(require('../Sounds/mechanical-clock.mp3'))
+            setImageFile(require('../Images/clock.png'))
           break;
         case 3:
-            setSoundFile('../Sounds/rock_alarm.mp3')
-            setImageFile('../Images/electric-guitar.png')
+            setSoundFile(require('../Sounds/rock_alarm.mp3'))
+            setImageFile(require('../Images/electric-guitar.png'))
           break;
         default:
+            setImageFile(require('../Images/close.png'))
           break;
       }
  }, [])
@@ -127,26 +170,29 @@ useEffect(() => {
                   //  console.log("increment hours")
                 }
                 if (secs == '00' && mins == '00' && hours == '00') {
-                  //  play()
+                    loadSound(soundFile)
                     setTimerDone(true)
                     setIsRunning(false)
                     Alert.alert(`${props.title} is Over`, "this timer has elapsed you can remove or reset it", [
                         {text: "Remove",
                         onPress: () => {
-                           // stopPlaying()
+                           // setSoundOff(true)
+                          // cancelSound()
+                           soundOff.current = true
                             props.onRemoveTimer()
-
                         }},
                         {text: "Reset",
                         onPress: () => {
                             //sound.stopAsync()
+                            //cancelSound()
+                            soundOff.current = true
+                          // setSoundOff(true)
                             resetTimer()
-                            
                         }}
                         
                     ])
                    
-                    loadSound(require('../Sounds/Alarm.mp3'))
+                  
                 }
             }
         }, 1000)
@@ -200,8 +246,9 @@ const onRenderLeftAction = () => {
                 <Text style = {props.isDarkMode ? {...styles.title, color: 'white'}: styles.title}>{props.title}</Text>
                 <Text style = {props.isDarkMode ? {...styles.clock, color: 'white'}:styles.clock}> {hours} : {mins} : {secs} </Text>
             </View>
-            {/* <Image style={{height: 20, widht: 20}} source = {require('../Images/sound.png')} /> */}
+            <Image style={styles.imageIcon} source = {imageFile} />
             {/* <Text>{props.soundChosen}</Text> */}
+            
             <Pressable 
                 style = {({pressed}) => [isRunning ? ((pressed) ? {...styles.startStop, backgroundColor: 'red', opacity: 0.4} : {...styles.startStop, backgroundColor: 'red'} ): ((pressed) ? {...styles.startStop, backgroundColor: 'green', opacity: 0.4} : {...styles.startStop, backgroundColor: 'green'})]}
                 onPress = {() => {setIsRunning(!isRunning)}}>
@@ -244,12 +291,13 @@ const styles = StyleSheet.create({
     startStop: {
         height: 60,
         width: 60,
-        borderRadius: 100,
+        borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
         marginTop: 5,
-        marginLeft: -45
+       //  marginLeft: -45
+       
     }, 
     buttonText: {
         fontSize: 19,
@@ -272,10 +320,18 @@ const styles = StyleSheet.create({
     
       },
       texts: {
-      //  backgroundColor: 'red'
+        width: '65%',
+       // backgroundColor: 'red',
       padding: 10,
-      margin: 10,
+      marginLeft: 10,
       },
+      imageIcon: {
+        height: 30,
+        width: 30,
+       // backgroundColor: 'red',
+        marginLeft: -10,
+        marginRight: 20
+      }
     
 });
 
