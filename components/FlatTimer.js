@@ -9,6 +9,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 // import alarmFile from '../Sounds/Alarm1.mp3';
 
 
+
 const FlatTimer = (props) => {
 
 const [secs, setSecs] = useState(props.s);
@@ -21,24 +22,24 @@ const [opacityVal, setOpacityVal] = useState(0.3)
 
 const[soundFile, setSoundFile] = useState('')
 const[imageFile, setImageFile] = useState(require('../Images/close.png'))
-const [sound, setSound] = useState(new Audio.Sound);
+//const [sound, setSound] = useState(new Audio.Sound);
+const sound = useRef()
 const soundOff = useRef(false)
 
 const loadSound = async (soundFile) => {
     console.log("loading sound Input")
     const { sound } =  await Audio.Sound.createAsync( soundFile )
-    await setSound(sound)
+  // sound.current = await Audio.Sound.createAsync( soundFile )
+   // sound.current = sound
     console.log('loaded sound')
     await sound.playAsync();
     console.log('playing sound input')
     
   sound.setOnPlaybackStatusUpdate((status) => {
    console.log(status.isPlaying)
-
-   //ßconsole.log(soundOff)
    if(soundOff.current == true){
     sound.stopAsync()
-    //rsound.unloadAsync()
+    //sound.unloadAsync()
     return
 }
    if (!status.didJustFinish) return;
@@ -72,13 +73,13 @@ const loadSound = async (soundFile) => {
 // })
 
 }
-// const cancelSound =() => {
-//     console.log('stoppong one')
-//     console.log(sound)
+const cancelSound =() => {
+    console.log('stoppong one')
+    console.log(sound.current)
 //    sound.stopAsync()
 //     sound.unloadAsync()
 //     console.log('stopping play and unloading')
-// }
+}
 
 // const playSound = async () => {
 //    // await sound.loadAsync();
@@ -184,10 +185,11 @@ useEffect(() => {
                         {text: "Reset",
                         onPress: () => {
                             //sound.stopAsync()
-                            //cancelSound()
+                            
                             soundOff.current = true
                           // setSoundOff(true)
                             resetTimer()
+                            cancelSound()
                         }}
                         
                     ])
