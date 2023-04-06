@@ -20,33 +20,33 @@ export default function FlatScreen(props) {
 
     const fetchAsyncData = async () => {
       const data = await _asyncGetData()
-      setTimersArray(data)
+      if(data != '[]'){
+        console.log('full')
+       setTimersArray(data)
       console.log("in the function the data is ", data)
-      
+      }else {
+        console.log('empty')
+        // await _asyncSetData(defaultTimer)
+        // setTimersArray(defaultTimer)
+      }
     }
 
     fetchAsyncData()
 
-    //console.log("the async data i got is", fetchAsyncData())
-
-    // Load data from AsyncStorage when component mounts
-    //'setTimersArray(_asyncGetData())'
-   // await _asyncGetData()
-    // console.log("async: ", )
-    // console.log("sync", timersArray)
    
   }, []);
 
   const _asyncSetData = async (item) => {
 
     const currentData = await _asyncGetData()
-    const newArray = [...currentData, item]
+    const newArray = [...currentData, {...item, index: index}]
 
     try {
       await AsyncStorage.setItem(
         'timersArray',
          //timersArray
         JSON.stringify(newArray)
+       // JSON.stringify(timersArray)
       );
     } catch (error) {
       console.log(error)
@@ -68,13 +68,32 @@ export default function FlatScreen(props) {
   };
   }
 
- 
+ const _asyncRemoveSingleTimer = async (index) => {
+
+  const currentData = await _asyncGetData()
+  console.log('removing single timer current data', currentData, index)
+  const newArray = currentData.filter((timer) => timer.index != index)
+  console.log('removing single timer new array', newArray)
+  try{
+
+    await AsyncStorage.setItem(
+      'timersArray',
+       //timersArray
+      JSON.stringify(newArray)
+     // JSON.stringify(timersArray)
+    );
+
+  }catch(error){
+    console.log(error)
+  }
+ } 
  
 
   const addTimer = (timerObject) => {
    setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
     setIndex(index => index + 1)
-    _asyncSetData(timerObject)
+    //_asyncSetData(timerObject)
+    _asyncSetData(timerObject, index)
    // _asyncGetData()
   }
 
@@ -82,6 +101,7 @@ export default function FlatScreen(props) {
    // console.log('removing time from timer with index', index)
    // console.log(allColorTest)
     setTimersArray(timersArray => timersArray.filter((timer) => timer.index != index));
+    _asyncRemoveSingleTimer(index)
   }
   
 
