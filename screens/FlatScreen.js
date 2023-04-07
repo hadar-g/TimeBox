@@ -17,91 +17,26 @@ export default function FlatScreen(props) {
   //  const[timersArray, setTimersArray] = useState(allColorTestTimers)
   // const[index, setIndex] = useState(20)
   useEffect(() => {
+    console.log('useEffect hello')
 
-    const fetchAsyncData = async () => {
-      const data = await _asyncGetData()
-      if(data != '[]'){
-        console.log('full')
-       setTimersArray(data)
-      console.log("in the function the data is ", data)
-      }else {
-        console.log('empty')
-        // await _asyncSetData(defaultTimer)
-        // setTimersArray(defaultTimer)
-      }
+    const fetchData = async() => {
+      console.log('info from props is',await props.asyncGetData('timersArray'))
+      setTimersArray(await props.asyncGetData('timersArray'))
     }
-
-    fetchAsyncData()
-
-   
+    fetchData()
+    
   }, []);
-
-  const _asyncSetData = async (item) => {
-
-    const currentData = await _asyncGetData()
-    const newArray = [...currentData, {...item, index: index}]
-
-    try {
-      await AsyncStorage.setItem(
-        'timersArray',
-         //timersArray
-        JSON.stringify(newArray)
-       // JSON.stringify(timersArray)
-      );
-    } catch (error) {
-      console.log(error)
-    }
-  };
-
-  const _asyncGetData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('timersArray');
-      if (value !== null) {
-        
-        console.log("this value from get" , JSON.parse(value));
-        return JSON.parse(value)
-      }else{
-        return null
-      }
-    } catch (error) {
-      console.log(error)
-  };
-  }
-
- const _asyncRemoveSingleTimer = async (index) => {
-
-  const currentData = await _asyncGetData()
-  console.log('removing single timer current data', currentData, index)
-  const newArray = currentData.filter((timer) => timer.index != index)
-  console.log('removing single timer new array', newArray)
-  try{
-
-    await AsyncStorage.setItem(
-      'timersArray',
-       //timersArray
-      JSON.stringify(newArray)
-     // JSON.stringify(timersArray)
-    );
-
-  }catch(error){
-    console.log(error)
-  }
- } 
  
 
   const addTimer = (timerObject) => {
    setTimersArray(timersArray => [...timersArray, {...timerObject, index: index}])
     setIndex(index => index + 1)
-    //_asyncSetData(timerObject)
-    _asyncSetData(timerObject, index)
-   // _asyncGetData()
+    props.asyncSetData([...timersArray, {...timerObject, index: index}], 'timersArray')
   }
 
   const removeTimer = (index) => {
-   // console.log('removing time from timer with index', index)
-   // console.log(allColorTest)
     setTimersArray(timersArray => timersArray.filter((timer) => timer.index != index));
-    _asyncRemoveSingleTimer(index)
+   props.asyncSetData(timersArray.filter((timer) => timer.index != index), 'timersArray')
   }
   
 

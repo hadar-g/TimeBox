@@ -4,6 +4,7 @@ import { useState, useEffect, React, Component, forwardRef, useImperativeHandle,
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
  import { Audio } from 'expo-av';
+ import AsyncStorage from '@react-native-async-storage/async-storage';
 //import Sound from "react-native-sound";
 // import useSound from 'use-sound';
 // import alarmFile from '../Sounds/Alarm1.mp3';
@@ -12,6 +13,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const FlatTimer = (props) => {
 
+const originalSeconds = props.s
+const orignalMinutes = props.m
+const originalHours = props.h
 const [secs, setSecs] = useState(props.s);
 const [mins, setMins] = useState(props.m);
 const[hours, setHours] = useState(props.h);
@@ -111,9 +115,7 @@ const cancelSound =() => {
 //     console.log('sound unloaded after stop')
 // }
 
-const originalSeconds = props.s
-const orignalMinutes = props.m
-const originalHours = props.h
+
 
 
 useEffect(() => {
@@ -148,7 +150,7 @@ useEffect(() => {
 
 
 useEffect(() => {
-    
+  
     setSecs(secs => secs.toString().padStart(2, '0'))
     setMins(mins => mins.toString().padStart(2, '0'))
     setHours(hours => hours.toString().padStart(2, '0'))

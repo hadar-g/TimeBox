@@ -4,13 +4,50 @@ import RoundScreen from './screens/RoundScreen';
 import HomeScreen from './screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {View, StyleSheet, Button, Pressable, Image} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const defaultTimer = require('./components/Constants/DefaultTimer')
 
 export default function App() {
 
   const [showTimers, setShowTimers] = useState(true)
   const [isDarkMode, setIsDarkMode] = useState(false)
+
+  useEffect(() => {
+    console.log('app use effect')
+    _asyncSetData(defaultTimer, 'timersArray')
+  }, [])
+
+  const _asyncSetData = async (array, dataKey) => {
+    // const currentData = await _asyncGetData('timersArray')
+    // const newArray = [...currentData, {...item, index: index}]
+    try {
+      await AsyncStorage.setItem(
+        dataKey,
+         //timersArray
+        JSON.stringify(array)
+       // JSON.stringify(timersArray)
+      );
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const _asyncGetData = async (dataKey) => {
+    try {
+      const value = await AsyncStorage.getItem(dataKey);
+      if (value !== null) {
+        
+        console.log("this value from get" , JSON.parse(value));
+        return JSON.parse(value)
+      }else{
+        return null
+      }
+    } catch (error) {
+      console.log(error)
+  };
+  }
 
   return (
     <View style = {isDarkMode ? {...styles.homeScreen, backgroundColor: 'black'}: {...styles.homeScreen, backgroundColor: 'white'}}>
@@ -52,6 +89,8 @@ export default function App() {
         showTimers 
         ? 
         <FlatScreen 
+          asyncSetData = {_asyncSetData}
+          asyncGetData = {_asyncGetData}
           isDarkMode = {isDarkMode}/> 
         : 
         <StopwatchScreen 
