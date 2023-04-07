@@ -14,6 +14,7 @@ export default function FlatScreen(props) {
 
  const[timersArray, setTimersArray] = useState(defaultTimer)
  const[index, setIndex] = useState(1)
+const[reset, setReset] = useState(false)
   //  const[timersArray, setTimersArray] = useState(allColorTestTimers)
   // const[index, setIndex] = useState(20)
   useEffect(() => {
@@ -24,6 +25,8 @@ export default function FlatScreen(props) {
       setTimersArray(await props.asyncGetData('timersArray'))
     }
     fetchData()
+
+   // setReset(false)
     
   }, []);
  

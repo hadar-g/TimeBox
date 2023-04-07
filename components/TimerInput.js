@@ -122,7 +122,11 @@ const TimerInput = (props) => {
                 minutes: minsInput, 
                 hours: hoursInput,
                 timerColorChosen: colorChosen,
-                soundChosen: soundPicked})
+                soundChosen: soundPicked,
+                ogsec: secondsInput,
+                ogmin: minsInput,
+                oghr: hoursInput
+            })
     
             setSecondsInput('0');
             setMinsInput('0');

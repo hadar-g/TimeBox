@@ -212,13 +212,23 @@ useEffect(() => {
 }, [isRunning, secs])
 
 
-const resetTimer = () => {
+const resetTimer = async () => {
 
             setTimerDone(false)
             setIsRunning(false)
-            setSecs(originalSeconds)
-            setMins(orignalMinutes)
-            setHours(originalHours)
+            // setSecs(originalSeconds)
+            // setMins(orignalMinutes)
+            // setHours(originalHours)
+
+            let timers = await props.asyncGetData('timersArray')
+            const indexOf = timers.findIndex(timer => timer.index === props.index)
+            timers[indexOf] = {...timers[indexOf], seconds: timers[indexOf].ogsec , minutes: timers[indexOf].ogmin, hours: timers[indexOf].oghr} 
+            setSecs(timers[indexOf].ogsec)
+            setMins(timers[indexOf].ogmin)
+            setHours(timers[indexOf].oghr)
+            console.log(timers)
+            await props.asyncSetData(timers, 'timersArray')
+
 }
 
 const onRenderLeftAction = () => {

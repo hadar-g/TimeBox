@@ -9,7 +9,10 @@ const defaultTimer = [
     "hours": 0,
     "timerColorChosen": colorValues.RedOne,
     "soundChosen": 1,
-    "index" : 0
+    "index" : 0,
+    "ogsec": 5,
+    "ogmin": 0,
+    "oghr": 0,
   }
 ]
 module.exports = defaultTimer
