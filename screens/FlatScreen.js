@@ -72,6 +72,9 @@ export default function FlatScreen(props) {
             onRemoveTimer = {() => {removeTimer(timerObject.index)}}
             isDarkMode = {props.isDarkMode}
             soundChosen = {timerObject.soundChosen}
+            index = {timerObject.index}
+            asyncSetData = {props.asyncSetData}
+            asyncGetData = {props.asyncGetData}
           />
     
 

@@ -192,13 +192,20 @@ useEffect(() => {
                           // setSoundOff(true)
                             resetTimer()
                             cancelSound()
-                        }}
-                        
+                        }}  
                     ])
-                   
-                  
                 }
             }
+            const writeNewData = async () => {
+                let timers = await props.asyncGetData('timersArray')
+                const indexOf = timers.findIndex(timer => timer.index === props.index)
+                timers[indexOf] = {...timers[indexOf], seconds: secs, minutes: mins, hours: hours} 
+                console.log(timers)
+                await props.asyncSetData(timers, 'timersArray')
+                //const updatedTimers = timers.filter()
+            }
+            writeNewData()
+        
         }, 1000)
         return () => clearTimeout(timer)
 
