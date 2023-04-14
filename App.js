@@ -8,11 +8,21 @@ import {useState, useEffect} from 'react'
 import {View, StyleSheet, Button, Pressable, Image} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const defaultTimer = require('./components/Constants/DefaultTimer')
+import * as TaskManager from 'expo-task-manager';
 
 export default function App() {
 
   const [showTimers, setShowTimers] = useState(true)
   const [isDarkMode, setIsDarkMode] = useState(false)
+
+  // TaskManager.defineTask('background-fetch', async () => {
+  //   const now = Date.now();
+  
+  //   console.log(`Got background fetch call at date: ${new Date(now).toISOString()}`);
+  
+  //   // Be sure to return the successful result type!
+  //   return BackgroundFetch.BackgroundFetchResult.NewData;
+  // });
 
   useEffect(() => {
     console.log('app use effect')
@@ -39,7 +49,7 @@ export default function App() {
       const value = await AsyncStorage.getItem(dataKey);
       if (value !== null) {
         
-        console.log("this value from get" , JSON.parse(value));
+       // console.log("this value from get" , JSON.parse(value));
         return JSON.parse(value)
       }else{
         return null

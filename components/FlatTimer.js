@@ -1,10 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image, Alert} from 'react-native';
+import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image, Alert, AppState} from 'react-native';
 import { useState, useEffect, React, Component, forwardRef, useImperativeHandle, useRef} from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
  import { Audio } from 'expo-av';
  import AsyncStorage from '@react-native-async-storage/async-storage';
+ import * as BackgroundFetch from 'expo-background-fetch';
+ import * as TaskManager from 'expo-task-manager';
+
 //import Sound from "react-native-sound";
 // import useSound from 'use-sound';
 // import alarmFile from '../Sounds/Alarm1.mp3';
@@ -23,6 +26,11 @@ const [isRunning, setIsRunning] = useState(false)
 const[timerDone, setTimerDone] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 const [opacityVal, setOpacityVal] = useState(0.3)
+//const appState = useRef(AppState.currentState);
+const prevDateTime = useRef(Date.now())
+const leavingTime = useRef(Date.now())
+const timeDiff = useRef(0)
+
 
 const[soundFile, setSoundFile] = useState('')
 const[imageFile, setImageFile] = useState(require('../Images/close.png'))
@@ -148,14 +156,17 @@ useEffect(() => {
       }
  }, [])
 
-
 useEffect(() => {
   
     setSecs(secs => secs.toString().padStart(2, '0'))
     setMins(mins => mins.toString().padStart(2, '0'))
     setHours(hours => hours.toString().padStart(2, '0'))
 
+    
+
         const timer = setTimeout( () => {
+           // console.log("my current app state is ", appState.current)
+
             if (isRunning) {
                 if (secs != '00') {
                     setSecs(secs => (secs - 1).toString().padStart(2, '0'))
@@ -200,16 +211,73 @@ useEffect(() => {
                 let timers = await props.asyncGetData('timersArray')
                 const indexOf = timers.findIndex(timer => timer.index === props.index)
                 timers[indexOf] = {...timers[indexOf], seconds: secs, minutes: mins, hours: hours} 
-                console.log(timers)
+                //console.log(timers)
                 await props.asyncSetData(timers, 'timersArray')
                 //const updatedTimers = timers.filter()
             }
             writeNewData()
+
+           
+
+
         
         }, 1000)
         return () => clearTimeout(timer)
 
 }, [isRunning, secs])
+
+// const performBackgroundTask = async () => {
+//     // Increment the count every second
+//     setInterval(() => {
+//         console.log('counting noowwww')
+//     }, 1000);
+//   };
+
+useEffect(() => {
+
+    const handleAppStateChange = (nextAppState) => {
+        //console.log(nextAppState)
+       // let leavingTime = 0
+        if((nextAppState === 'inactive' || nextAppState === 'background')){
+            console.log("bye")
+            console.log('leaving when seconds are at ', secs)
+             leavingTime.current = Date.now()
+        }
+        if (nextAppState === 'active' ){
+            console.log('hello')
+            const arrivingTime = Date.now()
+             timeDiff.current = Math.floor((arrivingTime - leavingTime.current) / 1000)
+            console.log(`leaving time ${leavingTime.current} and arriving time ${arrivingTime} \n with a difference of ${timeDiff.current}`)
+
+            const newMins = Math.floor(timeDiff.current / 60 )
+            const newSecs = timeDiff.current % 60
+
+            console.log(`seconds are now at ${secs} and i want to reduce them by ${newSecs} and is running is ${isRunning}`)
+
+            
+            // setSecs(secs - newSecs)
+            // setMins(mins - newMins)
+           // console.log(timeDiff)
+        }
+        // if (appState === 'active' && nextAppState.match(/inactive|background/)) {
+        //     prevDateTime.current = (Date.now());
+        //     console.log('going into the background now with date time ', prevDateTime.current )
+        // } else if (nextAppState === 'active') {
+        //   const elapsed = Math.floor((Date.now() - prevDateTime.current) / 1000);
+        //   console.log("coming to the foreground now and subtracting now ", Date.now(), " with then ", prevDateTime.current)
+        //   console.log(elapsed, " seconds have elapsed")
+        // }
+        //appState.current = (nextAppState);
+      };
+  
+      const subscripton = AppState.addEventListener('change', handleAppStateChange);
+      console.log("my subscription is ", subscripton)
+  
+      return () => {
+        //AppState.removeEventListener('change', handleAppStateChange);
+        subscripton.remove()
+      };
+}, [])
 
 
 const resetTimer = async () => {
@@ -226,7 +294,7 @@ const resetTimer = async () => {
             setSecs(timers[indexOf].ogsec)
             setMins(timers[indexOf].ogmin)
             setHours(timers[indexOf].oghr)
-            console.log(timers)
+            //console.log(timers)
             await props.asyncSetData(timers, 'timersArray')
 
 }

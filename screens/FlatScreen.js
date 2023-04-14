@@ -1,5 +1,5 @@
 
-import {  StyleSheet, Text, View, ScrollView, Pressable, Image} from 'react-native';
+import {  StyleSheet, Text, View, ScrollView, Pressable, Image, AppState} from 'react-native';
 import FlatTimer from '../components/FlatTimer';
 import TimerInput from '../components/TimerInput';
 import { useState, React, useEffect} from 'react';
@@ -8,6 +8,7 @@ const allColorTestTimers = require('../components/Constants/AllColorTest')
 const defaultTimer = require('../components/Constants/DefaultTimer')
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 export default function FlatScreen(props) {
 
 
@@ -15,13 +16,14 @@ export default function FlatScreen(props) {
  const[timersArray, setTimersArray] = useState(defaultTimer)
  const[index, setIndex] = useState(1)
 const[reset, setReset] = useState(false)
+
   //  const[timersArray, setTimersArray] = useState(allColorTestTimers)
   // const[index, setIndex] = useState(20)
   useEffect(() => {
-    console.log('useEffect hello')
+    
 
     const fetchData = async() => {
-      console.log('info from props is',await props.asyncGetData('timersArray'))
+      //console.log('info from props is',await props.asyncGetData('timersArray'))
       setTimersArray(await props.asyncGetData('timersArray'))
     }
     fetchData()
