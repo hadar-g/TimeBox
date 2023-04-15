@@ -100,7 +100,9 @@ const styles = StyleSheet.create({
       },
       scroll: {
         width: '100%',
-        marginBottom: 280,
-       marginTop: -6
+       // marginBottom: 280,
+        height: '60%',
+      // marginTop: -6,
+      // backgroundColor: 'red'
       },
 });

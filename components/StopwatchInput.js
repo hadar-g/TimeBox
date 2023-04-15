@@ -64,7 +64,7 @@ const StopwatchInput = (props) => {
             setStopwatchNameInput('')
             setModalVisible(false)
             setBaseColor('red')
-            setColorChosen()
+            setColorChosen(colorValues.RedOne)
         }
 
 
