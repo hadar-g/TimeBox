@@ -58,7 +58,10 @@ const StopwatchInput = (props) => {
             props.onAddStopwatch({
                 key: uuidv4(),
                 name: stopwatchNameInput,
-                color: colorChosen
+                color: colorChosen,
+                seconds: 0,
+                minutes: 0,
+                hours: 0
             })
 
             setStopwatchNameInput('')

@@ -69,7 +69,9 @@ const removeStopwatch = (index) => {
                     timerColorChosen = {stopwatch.color}
                     name = {stopwatch.name}
                     isDarkMode = {props.isDarkMode}
-                    onRemoveTimer = {() => removeStopwatch(stopwatch.index)}/>
+                    onRemoveTimer = {() => removeStopwatch(stopwatch.index)}
+                    asyncSetData = {props.asyncSetData}
+                    asyncGetData = {props.asyncGetData}/>
             )
         })}
 

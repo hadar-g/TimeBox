@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image} from 'react-native';
+import { Animated, StyleSheet, Text, View, Button, ScrollView, Pressable, Image, AppState} from 'react-native';
 import { useState, useEffect, React, Component, forwardRef, useImperativeHandle, useRef} from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -13,7 +13,8 @@ const[hours, setHours] = useState(0);
 const [isRunning, setIsRunning] = useState(false)
 const[timerBackgroundColor, setTimerBackgroundColor] = useState('')
 const [opacityVal, setOpacityVal] = useState(0.3)
-
+const leavingTime = useRef(Date.now())
+const difference = useRef(0)
 
 useEffect(() => {
     {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.3)}
@@ -27,12 +28,31 @@ useEffect(() => {
     setSecs(secs => secs.toString().padStart(2, '0'))
     setMins(mins => mins.toString().padStart(2, '0'))
     setHours(hours => hours.toString().padStart(2, '0'))
+    
+  //   const handleAppStateChange = (nextAppState) => {
+  //     if(nextAppState == 'background' || nextAppState == 'inactive'){
+  //       leavingTime.current = Date.now()
+  //       console.log("leaving now with app state ", nextAppState, " and time", leavingTime.current)
+  //     }
+  //     else if(nextAppState == 'active'){
+  //       const arrivingTime = Date.now()
+  //       console.log('hello coming back to app state ', nextAppState, " and time ", arrivingTime)
+  //       difference.current = Math.floor((arrivingTime - leavingTime.current) / 1000)
+        
+  //     }
+  //     //console.log(nextAppState)
+  // }
+    
+  //  const subscripton = AppState.addEventListener('change', handleAppStateChange);
+  
+ 
 
         const timer = setTimeout(() => {
             if (isRunning) {
                 if (secs != '59') {
                     setSecs(secs => (parseInt(secs) + 1).toString().padStart(2, '0'))
                    // console.log('increment seconds: ', secs)
+                   //console.log("the difference was ", difference.current)
                 }
                 if (secs == '59' && mins !== '59') {
                     setSecs('00')
@@ -50,9 +70,22 @@ useEffect(() => {
                 //     setIsRunning(false)
                 //     console.log("timer is over")
                 // }
+
+                const writeNewData = async () => {
+                  let stopwatches = await props.asyncGetData('stopwatchArray')
+                  const indexOf = stopwatches.findIndex(stopwatch => stopwatch.index === props.index)
+                  stopwatches[indexOf] = {...stopwatches[indexOf], seconds: secs, minutes: mins, hours: hours} 
+                  //console.log(timers)
+                  await props.asyncSetData(stopwatches, 'stopwatchArray')
+                  //const updatedTimers = timers.filter()
+              }
+              writeNewData()
+
             }
         }, 1000)
-        return () => clearTimeout(timer)
+        return () => {
+       //   subscripton.remove()
+          clearTimeout(timer)}
 
 }, [isRunning, secs])
 

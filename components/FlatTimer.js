@@ -275,20 +275,20 @@ useEffect(() => {
         //console.log(nextAppState)
        // let leavingTime = 0
         if((nextAppState === 'inactive' || nextAppState === 'background')){
-            console.log("bye")
-            console.log('leaving when seconds are at ', secs)
+            // console.log("bye")
+            // console.log('leaving when seconds are at ', secs)
              leavingTime.current = Date.now()
         }
         if (nextAppState === 'active' ){
-            console.log('hello')
+           // console.log('hello')
             const arrivingTime = Date.now()
              timeDiff.current = Math.floor((arrivingTime - leavingTime.current) / 1000)
-            console.log(`leaving time ${leavingTime.current} and arriving time ${arrivingTime} \n with a difference of ${timeDiff.current}`)
+           // console.log(`leaving time ${leavingTime.current} and arriving time ${arrivingTime} \n with a difference of ${timeDiff.current}`)
 
             const newMins = Math.floor(timeDiff.current / 60 )
             const newSecs = timeDiff.current % 60
 
-            console.log(`seconds are now at ${secs} and i want to reduce them by ${newSecs} and is running is ${isRunning}`)
+         //   console.log(`seconds are now at ${secs} and i want to reduce them by ${newSecs} and is running is ${isRunning}`)
 
             
             // setSecs(secs - newSecs)
