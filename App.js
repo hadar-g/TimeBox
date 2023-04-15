@@ -8,11 +8,12 @@ import {useState, useEffect} from 'react'
 import {View, StyleSheet, Button, Pressable, Image} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const defaultTimer = require('./components/Constants/DefaultTimer')
+const defaultStopwatch = require('./components/Constants/DefaultStopwatch')
 import * as TaskManager from 'expo-task-manager';
 
 export default function App() {
 
-  const [showTimers, setShowTimers] = useState(true)
+  const [showTimers, setShowTimers] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   // TaskManager.defineTask('background-fetch', async () => {
@@ -27,6 +28,7 @@ export default function App() {
   useEffect(() => {
     console.log('app use effect')
     _asyncSetData(defaultTimer, 'timersArray')
+    _asyncSetData(defaultStopwatch, 'stopwatchArray')
   }, [])
 
   const _asyncSetData = async (array, dataKey) => {
@@ -104,6 +106,8 @@ export default function App() {
           isDarkMode = {isDarkMode}/> 
         : 
         <StopwatchScreen 
+          asyncSetData = {_asyncSetData}
+          asyncGetData = {_asyncGetData}
           isDarkMode = {isDarkMode}/>
         }
     </View>
