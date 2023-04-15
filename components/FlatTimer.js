@@ -34,13 +34,24 @@ const timeDiff = useRef(0)
 
 const[soundFile, setSoundFile] = useState('')
 const[imageFile, setImageFile] = useState(require('../Images/close.png'))
-//const [sound, setSound] = useState(new Audio.Sound);
-const sound = useRef()
+const [sound, setSound] = useState();
+//const sound = useRef()
 const soundOff = useRef(false)
+const firstTimePlayingSound = useRef(true)
 
 const loadSound = async (soundFile) => {
-    console.log("loading sound Input")
-    const { sound } =  await Audio.Sound.createAsync( soundFile )
+
+//console.log(sound)
+/***************************************************** */
+
+console.log('first time playing', firstTimePlayingSound.current)
+if(firstTimePlayingSound.current == true){
+  console.log("loading sound Input")
+  const { sound } =  await Audio.Sound.createAsync( soundFile )
+  setSound(sound)
+  firstTimePlayingSound.current = false
+}
+
   // sound.current = await Audio.Sound.createAsync( soundFile )
    // sound.current = sound
     console.log('loaded sound')
@@ -50,15 +61,24 @@ const loadSound = async (soundFile) => {
   sound.setOnPlaybackStatusUpdate((status) => {
    console.log(status.isPlaying)
    if(soundOff.current == true){
+    console.log('stopping and pausing during')
     sound.stopAsync()
+    sound.setPositionAsync(0)
     //sound.unloadAsync()
     return
 }
    if (!status.didJustFinish) return;
-       sound.unloadAsync();
+      // sound.unloadAsync();
+      console.log('stopping and pausing after')
+      sound.stopAsync()
+      sound.setPositionAsync(0)
         console.log('sound unloaded after okay')
+        soundOff.current = false
+
    
 })
+
+/***************************************************** */
 
     // while(sound.setOnPlaybackStatusUpdate.isP){
     //     console.log("IN WHILE")
@@ -87,7 +107,7 @@ const loadSound = async (soundFile) => {
 }
 const cancelSound =() => {
     console.log('stoppong one')
-    console.log(sound.current)
+    //console.log(sound.current)
 //    sound.stopAsync()
 //     sound.unloadAsync()
 //     console.log('stopping play and unloading')
@@ -134,6 +154,21 @@ useEffect(() => {
 
 
  useEffect(() => {
+
+  // const initialLoadSound = async (soundFile) => {
+  //   console.log('loading sound')
+  //   console.log(soundFile)
+  //   try{
+  //     const { sound } =  await Audio.Sound.createAsync( soundFile )
+  //   } catch (error){
+  //     console.log('ERROR LOADING SOUND', error)
+  //   }
+  
+  //   console.log("sound is", sound )
+  //  // sound.current = soundAsync
+  //   //setSound(soundAsync)
+  // }
+
     switch (props.soundChosen) {
         case 0:
             setImageFile(require('../Images/close.png'))
@@ -141,6 +176,7 @@ useEffect(() => {
         case 1 :
             setSoundFile(require('../Sounds/Alarm.mp3'))
             setImageFile(require('../Images/sound.png'))
+           // initialLoadSound(require('../Sounds/Alarm.mp3'))
           break;
         case 2: 
             setSoundFile(require('../Sounds/mechanical-clock.mp3'))
@@ -271,7 +307,7 @@ useEffect(() => {
       };
   
       const subscripton = AppState.addEventListener('change', handleAppStateChange);
-      console.log("my subscription is ", subscripton)
+      //console.log("my subscription is ", subscripton)
   
       return () => {
         //AppState.removeEventListener('change', handleAppStateChange);
