@@ -17,6 +17,16 @@ const leavingTime = useRef(Date.now())
 const difference = useRef(0)
 
 useEffect(() => {
+  const initialStateSetup = async() => {
+    let stopwatches = await props.asyncGetData('stopwatchArray')
+    const indexOf = stopwatches.findIndex(stopwatch => stopwatch.index === props.index)
+    setSecs(stopwatches[indexOf].seconds)
+
+  }
+  initialStateSetup()
+},[])
+
+useEffect(() => {
     {props.isDarkMode ? setOpacityVal(0.5) : setOpacityVal(0.3)}
     const myAdjustedColor = `rgba${props.timerColorChosen.substr(3, props.timerColorChosen.length-4)}, ${opacityVal})`
     setTimerBackgroundColor(myAdjustedColor)
@@ -77,6 +87,7 @@ useEffect(() => {
                   stopwatches[indexOf] = {...stopwatches[indexOf], seconds: secs, minutes: mins, hours: hours} 
                   //console.log(timers)
                   await props.asyncSetData(stopwatches, 'stopwatchArray')
+                  console.log(stopwatches)
                   //const updatedTimers = timers.filter()
               }
               writeNewData()
@@ -121,7 +132,6 @@ const onRenderLeftAction = () => {
   }
 
     return(
-    
         <GestureHandlerRootView>
         <Swipeable  
           renderLeftActions = {onRenderLeftAction}

@@ -97,19 +97,33 @@ export default function App() {
           onPress={() => {setIsDarkMode(!isDarkMode)}}/> */}
       </View>
 
-        {
+      <StopwatchScreen 
+          asyncSetData = {_asyncSetData}
+          asyncGetData = {_asyncGetData}
+          isDarkMode = {isDarkMode}
+          isVisibleNow = {showTimers}/>
+
+    <FlatScreen 
+          asyncSetData = {_asyncSetData}
+          asyncGetData = {_asyncGetData}
+          isDarkMode = {isDarkMode}
+          isVisibleNow = {showTimers}/>   
+
+        {/* {
         showTimers 
         ? 
         <FlatScreen 
           asyncSetData = {_asyncSetData}
           asyncGetData = {_asyncGetData}
-          isDarkMode = {isDarkMode}/> 
+          isDarkMode = {isDarkMode}
+          isVisibleNow = {showTimers}/> 
         : 
         <StopwatchScreen 
           asyncSetData = {_asyncSetData}
           asyncGetData = {_asyncGetData}
-          isDarkMode = {isDarkMode}/>
-        }
+          isDarkMode = {isDarkMode}
+          isVisibleNow = {showTimers}/>
+        } */}
     </View>
 
     

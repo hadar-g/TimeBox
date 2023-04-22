@@ -53,35 +53,37 @@ const removeStopwatch = (index) => {
 }
 
 
-  return (
+ 
+    if(props.isVisibleNow == false){
+      return (    <View style = {props.isDarkMode ?{...styles.stopwatchScreen, backgroundColor: 'black'} : styles.stopwatchScreen}>
 
-    <View style = {props.isDarkMode ?{...styles.stopwatchScreen, backgroundColor: 'black'} : styles.stopwatchScreen}>
+      <Text style={props.isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>My StopWatches</Text>
+      <StopwatchInput 
+          onAddStopwatch = {addStopwatch}/>
+          <ScrollView style = {styles.scroll}>
+  
+          {stopwatchArray.map(stopwatch => {
+              return(
+                  <Stopwatch 
+                      key= {stopwatch.key}
+                      timerColorChosen = {stopwatch.color}
+                      name = {stopwatch.name}
+                      isDarkMode = {props.isDarkMode}
+                      onRemoveTimer = {() => removeStopwatch(stopwatch.index)}
+                      asyncSetData = {props.asyncSetData}
+                      asyncGetData = {props.asyncGetData}
+                      index = {stopwatch.index}/>
+              )
+          })}
+  
+          </ScrollView>
+  
+  
+      </View>)
+    }else {
+      return(<></>)
+    }
 
-    <Text style={props.isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>My StopWatches</Text>
-    <StopwatchInput 
-        onAddStopwatch = {addStopwatch}/>
-        <ScrollView style = {styles.scroll}>
-
-        {stopwatchArray.map(stopwatch => {
-            return(
-                <Stopwatch 
-                    key= {stopwatch.key}
-                    timerColorChosen = {stopwatch.color}
-                    name = {stopwatch.name}
-                    isDarkMode = {props.isDarkMode}
-                    onRemoveTimer = {() => removeStopwatch(stopwatch.index)}
-                    asyncSetData = {props.asyncSetData}
-                    asyncGetData = {props.asyncGetData}/>
-            )
-        })}
-
-        </ScrollView>
-
-
-    </View>
-
-
-  );
 }
 
 const styles = StyleSheet.create({
