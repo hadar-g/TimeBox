@@ -61,7 +61,8 @@ const StopwatchInput = (props) => {
                 color: colorChosen,
                 seconds: 0,
                 minutes: 0,
-                hours: 0
+                hours: 0,
+                isRunning: false
             })
 
             setStopwatchNameInput('')

@@ -9,6 +9,7 @@ const defaultStopwatch = [
     "seconds": 0, 
     "minutes": 0, 
     "hours": 0,
+    "isRunning": false
   }
 ]
 module.exports = defaultStopwatch

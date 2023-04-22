@@ -72,7 +72,8 @@ const removeStopwatch = (index) => {
                       onRemoveTimer = {() => removeStopwatch(stopwatch.index)}
                       asyncSetData = {props.asyncSetData}
                       asyncGetData = {props.asyncGetData}
-                      index = {stopwatch.index}/>
+                      index = {stopwatch.index}
+                      isRunning = {stopwatch.isRunning}/>
               )
           })}
   

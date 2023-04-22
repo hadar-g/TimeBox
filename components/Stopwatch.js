@@ -21,6 +21,7 @@ useEffect(() => {
     let stopwatches = await props.asyncGetData('stopwatchArray')
     const indexOf = stopwatches.findIndex(stopwatch => stopwatch.index === props.index)
     setSecs(stopwatches[indexOf].seconds)
+    setIsRunning(stopwatches[indexOf].isRunning)
 
   }
   initialStateSetup()
@@ -39,21 +40,24 @@ useEffect(() => {
     setMins(mins => mins.toString().padStart(2, '0'))
     setHours(hours => hours.toString().padStart(2, '0'))
     
-  //   const handleAppStateChange = (nextAppState) => {
-  //     if(nextAppState == 'background' || nextAppState == 'inactive'){
-  //       leavingTime.current = Date.now()
-  //       console.log("leaving now with app state ", nextAppState, " and time", leavingTime.current)
-  //     }
-  //     else if(nextAppState == 'active'){
-  //       const arrivingTime = Date.now()
-  //       console.log('hello coming back to app state ', nextAppState, " and time ", arrivingTime)
-  //       difference.current = Math.floor((arrivingTime - leavingTime.current) / 1000)
-        
-  //     }
-  //     //console.log(nextAppState)
-  // }
+    const handleAppStateChange = (nextAppState) => {
+      if(nextAppState == 'background' || nextAppState == 'inactive'){
+        leavingTime.current = Date.now()
+        console.log("leaving now with app state ", nextAppState, " and time", leavingTime.current)
+      }
+      else if(nextAppState == 'active'){
+        const arrivingTime = Date.now()
+        console.log('hello coming back to app state ', nextAppState, " and time ", arrivingTime)
+        difference.current = Math.floor((arrivingTime - leavingTime.current) / 1000)
+        console.log("coming back with difference ", difference.current)
+        if(isRunning == true){
+          setSecs((parseInt(secs) + difference.current).toString().padStart(2, '0'))
+        }
+      }
+      //console.log(nextAppState)
+  }
     
-  //  const subscripton = AppState.addEventListener('change', handleAppStateChange);
+   const subscripton = AppState.addEventListener('change', handleAppStateChange);
   
  
 
@@ -62,7 +66,7 @@ useEffect(() => {
                 if (secs != '59') {
                     setSecs(secs => (parseInt(secs) + 1).toString().padStart(2, '0'))
                    // console.log('increment seconds: ', secs)
-                   //console.log("the difference was ", difference.current)
+                   console.log("the difference was ", difference.current)
                 }
                 if (secs == '59' && mins !== '59') {
                     setSecs('00')
@@ -75,12 +79,6 @@ useEffect(() => {
                     setHours(hours => (parseInt(hours) + 1).toString().padStart(2, '0'))
                    // console.log("increment hours")
                 }
-                // if (secs == '00' && mins == '00' && hours == '00') {
-                //     setTimerDone(true)
-                //     setIsRunning(false)
-                //     console.log("timer is over")
-                // }
-
                 const writeNewData = async () => {
                   let stopwatches = await props.asyncGetData('stopwatchArray')
                   const indexOf = stopwatches.findIndex(stopwatch => stopwatch.index === props.index)
@@ -95,7 +93,7 @@ useEffect(() => {
             }
         }, 1000)
         return () => {
-       //   subscripton.remove()
+          subscripton.remove()
           clearTimeout(timer)}
 
 }, [isRunning, secs])
@@ -130,6 +128,16 @@ const onRenderLeftAction = () => {
       </Pressable>
     )
   }
+  const handleSetRunning = async () => {
+    setIsRunning(!isRunning)
+    //console.log(isRunning)
+    let stopwatches = await props.asyncGetData('stopwatchArray')
+    const indexOf = stopwatches.findIndex(stopwatch => stopwatch.index === props.index)
+    stopwatches[indexOf] = {...stopwatches[indexOf], isRunning: !isRunning} 
+    await props.asyncSetData(stopwatches, 'stopwatchArray')
+
+
+  }
 
     return(
         <GestureHandlerRootView>
@@ -145,7 +153,7 @@ const onRenderLeftAction = () => {
             </View>
             <Pressable 
                 style = {({pressed}) => [isRunning ? ((pressed) ? {...styles.startStop, backgroundColor: 'red', opacity: 0.4} : {...styles.startStop, backgroundColor: 'red'} ): ((pressed) ? {...styles.startStop, backgroundColor: 'green', opacity: 0.4} : {...styles.startStop, backgroundColor: 'green'})]}
-                onPress = {() => {setIsRunning(!isRunning)}}>
+                onPress = {handleSetRunning}>
                 <Text style = {styles.buttonText}>{isRunning ? "Stop" : "Start"}</Text>
             </Pressable>
             
