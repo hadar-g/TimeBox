@@ -43,15 +43,27 @@ useEffect(() => {
     const handleAppStateChange = (nextAppState) => {
       if(nextAppState == 'background' || nextAppState == 'inactive'){
         leavingTime.current = Date.now()
-        console.log("leaving now with app state ", nextAppState, " and time", leavingTime.current)
+        //console.log("leaving now with app state ", nextAppState, " and time", leavingTime.current)
       }
       else if(nextAppState == 'active'){
         const arrivingTime = Date.now()
-        console.log('hello coming back to app state ', nextAppState, " and time ", arrivingTime)
+       // console.log('hello coming back to app state ', nextAppState, " and time ", arrivingTime)
         difference.current = Math.floor((arrivingTime - leavingTime.current) / 1000)
-        console.log("coming back with difference ", difference.current)
+       // console.log("coming back with difference ", difference.current)
         if(isRunning == true){
-          setSecs((parseInt(secs) + difference.current).toString().padStart(2, '0'))
+          const totalSecondsRightNow = parseInt(secs) + (parseInt(mins) * 60 )+ (parseInt(hours) * 3600 ) + parseInt(difference.current)
+          const newSecs = totalSecondsRightNow % 60 
+          const newMins = Math.floor(totalSecondsRightNow / 60) % 60
+          const newHours = Math.floor(totalSecondsRightNow / 3600)  % 60
+          console.log("total seconds before leaving ", parseInt(secs) + parseInt(mins)+ parseInt(hours))
+          console.log("total seconds after coming back ", totalSecondsRightNow)
+          console.log(`${newHours} : ${newMins} : ${newSecs} `)
+          console.log("the total seconds right now are", totalSecondsRightNow)
+          setHours(newHours)
+          setMins(newMins)
+          setSecs(newSecs)
+
+         // setSecs((parseInt(secs) + difference.current).toString().padStart(2, '0'))
         }
       }
       //console.log(nextAppState)
@@ -63,17 +75,17 @@ useEffect(() => {
 
         const timer = setTimeout(() => {
             if (isRunning) {
-                if (secs != '59') {
+                if (secs <= '59') {
                     setSecs(secs => (parseInt(secs) + 1).toString().padStart(2, '0'))
                    // console.log('increment seconds: ', secs)
-                   console.log("the difference was ", difference.current)
+                  // console.log("the difference was ", difference.current)
                 }
-                if (secs == '59' && mins !== '59') {
+                if (secs == '59' && mins <= '59') {
                     setSecs('00')
                     setMins(mins => (parseInt(mins) + 1).toString().padStart(2, '0'))
                    // console.log("increment mins")
                 }
-                if (secs == '59' && mins == '59' && hours != '59') {
+                if (secs == '59' && mins == '59' && hours <= '59') {
                     setSecs('00')
                     setMins('00')
                     setHours(hours => (parseInt(hours) + 1).toString().padStart(2, '0'))
@@ -85,7 +97,7 @@ useEffect(() => {
                   stopwatches[indexOf] = {...stopwatches[indexOf], seconds: secs, minutes: mins, hours: hours} 
                   //console.log(timers)
                   await props.asyncSetData(stopwatches, 'stopwatchArray')
-                  console.log(stopwatches)
+                  //console.log(stopwatches)
                   //const updatedTimers = timers.filter()
               }
               writeNewData()
