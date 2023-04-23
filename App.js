@@ -109,6 +109,13 @@ export default function App() {
           isDarkMode = {isDarkMode}
           isVisibleNow = {showTimers}/>    */}
 
+          <StopwatchScreen 
+          asyncSetData = {_asyncSetData}
+          asyncGetData = {_asyncGetData}
+          isDarkMode = {isDarkMode}
+          isVisibleNow = {showTimers}
+          toggle = {() => setShowTimers(false)}/>
+{/* 
         {
         showTimers 
         ? 
@@ -123,7 +130,7 @@ export default function App() {
           asyncGetData = {_asyncGetData}
           isDarkMode = {isDarkMode}
           isVisibleNow = {showTimers}/>
-        }
+        } */}
     </View>
 
     

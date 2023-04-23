@@ -1,5 +1,5 @@
 
-import {  StyleSheet, Text, View, ScrollView, Pressable, Image} from 'react-native';
+import {  StyleSheet, Text, View, ScrollView, Pressable, Image, Modal, Button} from 'react-native';
 import FlatTimer from '../components/FlatTimer';
 import StopwatchInput from '../components/StopwatchInput';
 import {useState, useEffect} from 'react'
@@ -53,11 +53,20 @@ const removeStopwatch = (index) => {
 }
 
 
- 
-    if(props.isVisibleNow == false){
       return (    <View style = {props.isDarkMode ?{...styles.stopwatchScreen, backgroundColor: 'black'} : styles.stopwatchScreen}>
 
       <Text style={props.isDarkMode ? {...styles.welcome, color: 'white'} : styles.welcome}>My StopWatches</Text>
+      <Modal
+         visible={props.isVisibleNow}
+         animationType="slide"
+         transparent = {true}>
+        <View style = {styles.timersModal}>
+          <Text style = {{fontSize: 40}}>Countdown Timers Coming Soon...</Text>
+          <Button title="Close" onPress={props.toggle}/>
+
+        </View>
+
+      </Modal>
       <StopwatchInput 
           onAddStopwatch = {addStopwatch}/>
           <ScrollView style = {styles.scroll}>
@@ -81,9 +90,6 @@ const removeStopwatch = (index) => {
   
   
       </View>)
-    }else {
-      return(<></>)
-    }
 
 }
 
@@ -110,4 +116,14 @@ const styles = StyleSheet.create({
       // marginTop: -6,
       // backgroundColor: 'red'
       },
+      timersModal: {
+        marginTop:100,
+        height: '90%', 
+        width: '100%',
+        backgroundColor: 'white',
+        borderTopRightRadius:20,
+        borderTopLeftRadius: 20,
+        borderColor: 'black',
+        borderWidth: 2
+      }
 });
