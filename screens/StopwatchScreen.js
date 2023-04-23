@@ -60,11 +60,27 @@ const removeStopwatch = (index) => {
          visible={props.isVisibleNow}
          animationType="slide"
          transparent = {true}>
-        <View style = {styles.timersModal}>
-          <Text style = {{fontSize: 40}}>Countdown Timers Coming Soon...</Text>
-          <Button title="Close" onPress={props.toggle}/>
+       
+          <ScrollView>
+          <View style = {styles.timersModal}>
 
-        </View>
+      
+          <Text style = {{fontSize: 40,  paddingBottom: 10}}>Countdown Timers Coming Soon...</Text>
+          <Text style = {{fontSize: 20, paddingBottom: 10}}>Customizable timer inputs including customizable names, colors, sounds, and durations</Text>
+        
+
+          <Image 
+        style = {{height: 300, width: 205}}
+        source = {require('../Images/TimerInput.png')}/>
+        <Text style = {{fontSize: 20, paddingBottom: 10, paddingTop: 10}}>Same display and controls as stopwatches but with timer and alarm functionality</Text>
+        <Image 
+        style = {{height: 275, width: 300}}
+        source = {require('../Images/TimersEx.png')}/>
+
+<Button title="Close" onPress={props.toggle}/>
+</View>
+</ScrollView>
+        
 
       </Modal>
       <StopwatchInput 
@@ -124,6 +140,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius:20,
         borderTopLeftRadius: 20,
         borderColor: 'black',
-        borderWidth: 2
+        borderWidth: 2,
+        alignItems: 'center',
+        padding: 7
       }
 });
